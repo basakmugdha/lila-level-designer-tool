@@ -16,7 +16,7 @@ function formatMatchLabel(m: MatchInfo): string {
   return `${m.match_id.slice(0, 8)}… (${m.day})`;
 }
 
-export type MatchFilterKind = 'default' | 'maxKills' | 'maxLoots' | 'maxStormDeaths';
+export type MatchFilterKind = 'maxKills' | 'maxLoots' | 'maxStormDeaths';
 
 export function Filters({
   maps,
@@ -30,7 +30,7 @@ export function Filters({
   onMatchChange,
   loadingMatches,
   hintMapsForDay = [],
-  matchFilter = 'default',
+  matchFilter = null,
   onMatchFilterChange,
 }: {
   maps: MapInfo[];
@@ -44,8 +44,8 @@ export function Filters({
   onMatchChange: (matchId: string) => void;
   loadingMatches: boolean;
   hintMapsForDay?: string[];
-  matchFilter?: MatchFilterKind;
-  onMatchFilterChange?: (kind: MatchFilterKind) => void;
+  matchFilter?: MatchFilterKind | null;
+  onMatchFilterChange?: (kind: MatchFilterKind | null) => void;
 }) {
   return (
     <div className="filters">
@@ -81,7 +81,6 @@ export function Filters({
           <span className="filter-group__label">Show match with</span>
           <div className="filter-group__radios" role="radiogroup" aria-label="Filter by stat">
             {[
-              { value: 'default' as const, label: 'Default' },
               { value: 'maxKills' as const, label: 'Max Kills' },
               { value: 'maxLoots' as const, label: 'Max Loots' },
               { value: 'maxStormDeaths' as const, label: 'Max Storm Deaths' },
@@ -104,7 +103,11 @@ export function Filters({
         <span className="filter-group__label">Match</span>
         <select
           value={selectedMatchId}
-          onChange={(e) => onMatchChange(e.target.value)}
+          onChange={(e) => {
+            const id = e.target.value;
+            onMatchChange(id);
+            onMatchFilterChange?.(null);
+          }}
           disabled={loadingMatches || !selectedMapId}
           aria-label="Select match"
           aria-busy={loadingMatches}

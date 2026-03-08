@@ -37,7 +37,7 @@ export default function App() {
   const [loadingMatch, setLoadingMatch] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [hintMapsForDay, setHintMapsForDay] = useState<string[]>([]);
-  const [matchFilter, setMatchFilter] = useState<MatchFilterKind>('default');
+  const [matchFilter, setMatchFilter] = useState<MatchFilterKind | null>(null);
 
   useEffect(() => {
     Promise.all([fetchMaps()])
@@ -58,7 +58,7 @@ export default function App() {
     setError(null);
     setLoadingMatches(true);
     setHintMapsForDay([]);
-    setMatchFilter('default');
+    setMatchFilter(null);
     preloadMinimap(selectedMapId);
     fetchMatches(undefined, selectedMapId, true)
       .then((r) => {
@@ -89,7 +89,7 @@ export default function App() {
   }, [selectedMapId, selectedDay, matchesForMap]);
 
   useEffect(() => {
-    if (matchFilter === 'default' || matches.length === 0) return;
+    if (matchFilter == null || matches.length === 0) return;
     const key = matchFilter === 'maxKills' ? 'kills' : matchFilter === 'maxLoots' ? 'loots' : 'storm_deaths';
     const sorted = [...matches].sort((a, b) => (b[key] ?? 0) - (a[key] ?? 0));
     setSelectedMatchId(sorted[0].match_id);

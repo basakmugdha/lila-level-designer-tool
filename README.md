@@ -16,7 +16,7 @@ cd backend && pip install -r requirements.txt && uvicorn main:app --reload --por
 cd frontend && npm install && npm run dev
 ```
 
-Open http://localhost:5173. For Node 18, use Node 20+ for `npm run build`.
+Open http://localhost:5173.
 
 ## Static export (e.g. GitHub Pages)
 

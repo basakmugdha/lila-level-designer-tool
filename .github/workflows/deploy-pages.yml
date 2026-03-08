@@ -34,12 +34,19 @@ jobs:
           cd frontend
           npm ci
           export VITE_USE_STATIC=true
+          export VITE_BASE_URL=./
           npm run build:pages
         env:
           VITE_USE_STATIC: 'true'
+          VITE_BASE_URL: './'
 
-      - name: Verify built index
-        run: head -18 frontend/dist/index.html
+      - name: Verify built index (relative asset paths)
+        run: |
+          echo "=== Built index.html (first 25 lines) ==="
+          head -25 frontend/dist/index.html
+          echo ""
+          echo "=== Checking asset paths are relative ==="
+          grep -E 'href="\./|src="\./' frontend/dist/index.html || true
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

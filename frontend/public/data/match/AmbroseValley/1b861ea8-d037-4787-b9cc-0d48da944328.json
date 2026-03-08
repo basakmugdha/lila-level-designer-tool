@@ -1,0 +1,378 @@
+{
+"match_id": "1b861ea8-d037-4787-b9cc-0d48da944328",
+"map_id": "AmbroseValley",
+"players": [
+{
+"user_id": "2f22cc18-052e-4614-be8c-116729fc095c",
+"is_bot": false,
+"positions": [
+{
+"ts_ms": 1770,
+"px": 726,
+"py": 543,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 708,
+"py": 544,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 695,
+"py": 548,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 681,
+"py": 574,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 672,
+"py": 588,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 667,
+"py": 604,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 661,
+"py": 587,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 636,
+"py": 570,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 636,
+"py": 580,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 634,
+"py": 553,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 617,
+"py": 550,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 609,
+"py": 564,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 604,
+"py": 555,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 595,
+"py": 557,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 594,
+"py": 567,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 589,
+"py": 573,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 583,
+"py": 562,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 584,
+"py": 591,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 588,
+"py": 592,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 583,
+"py": 589,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 580,
+"py": 586,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 570,
+"py": 597,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 562,
+"py": 602,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 561,
+"py": 594,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 544,
+"py": 584,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 529,
+"py": 583,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 517,
+"py": 583,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 521,
+"py": 578,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 519,
+"py": 573,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 523,
+"py": 574,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 525,
+"py": 551,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 533,
+"py": 549,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 540,
+"py": 544,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 540,
+"py": 532,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 537,
+"py": 496,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 516,
+"py": 488,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 526,
+"py": 496,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 531,
+"py": 493,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 536,
+"py": 493,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 558,
+"py": 532,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 590,
+"py": 539,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 622,
+"py": 546,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 640,
+"py": 565,
+"event": "Position"
+}
+],
+"events": [
+{
+"ts_ms": 1770,
+"px": 667,
+"py": 604,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 637,
+"py": 582,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 609,
+"py": 564,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 604,
+"py": 555,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 604,
+"py": 555,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 594,
+"py": 567,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 593,
+"py": 574,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 584,
+"py": 591,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 590,
+"py": 593,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 583,
+"py": 591,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 562,
+"py": 602,
+"event": "BotKill"
+},
+{
+"ts_ms": 1770,
+"px": 560,
+"py": 593,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 531,
+"py": 583,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 522,
+"py": 578,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 519,
+"py": 573,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 525,
+"py": 574,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 525,
+"py": 551,
+"event": "Loot"
+}
+]
+}
+],
+"bounds": {
+"ts_min_ms": 1770,
+"ts_max_ms": 1770
+}
+}

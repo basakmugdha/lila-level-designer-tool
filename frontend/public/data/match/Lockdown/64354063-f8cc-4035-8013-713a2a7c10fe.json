@@ -1,0 +1,240 @@
+{
+"match_id": "64354063-f8cc-4035-8013-713a2a7c10fe",
+"map_id": "Lockdown",
+"players": [
+{
+"user_id": "78f04e03-1fa4-484f-86db-190ebb7ec887",
+"is_bot": false,
+"positions": [
+{
+"ts_ms": 1770,
+"px": 386,
+"py": 423,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 418,
+"py": 419,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 426,
+"py": 424,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 427,
+"py": 425,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 436,
+"py": 432,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 444,
+"py": 429,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 467,
+"py": 435,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 486,
+"py": 434,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 484,
+"py": 446,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 488,
+"py": 450,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 488,
+"py": 457,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 511,
+"py": 451,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 521,
+"py": 455,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 522,
+"py": 453,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 534,
+"py": 439,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 528,
+"py": 438,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 520,
+"py": 449,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 518,
+"py": 455,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 518,
+"py": 453,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 509,
+"py": 453,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 497,
+"py": 451,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 493,
+"py": 448,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 491,
+"py": 445,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 501,
+"py": 455,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 511,
+"py": 453,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 523,
+"py": 447,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 530,
+"py": 447,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 534,
+"py": 448,
+"event": "Position"
+}
+],
+"events": [
+{
+"ts_ms": 1770,
+"px": 427,
+"py": 425,
+"event": "BotKill"
+},
+{
+"ts_ms": 1770,
+"px": 436,
+"py": 432,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 436,
+"py": 432,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 488,
+"py": 450,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 521,
+"py": 458,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 522,
+"py": 454,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 528,
+"py": 438,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 521,
+"py": 447,
+"event": "BotKill"
+},
+{
+"ts_ms": 1770,
+"px": 536,
+"py": 449,
+"event": "BotKilled"
+}
+]
+}
+],
+"bounds": {
+"ts_min_ms": 1770,
+"ts_max_ms": 1770
+}
+}

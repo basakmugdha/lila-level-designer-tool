@@ -1,0 +1,930 @@
+{
+"match_id": "d7f64643-d253-41c6-8daa-d6b7e770a4a2",
+"map_id": "Lockdown",
+"players": [
+{
+"user_id": "0b260629-9386-49d6-a66b-91ccbd3a4abc",
+"is_bot": false,
+"positions": [
+{
+"ts_ms": 1770,
+"px": 424,
+"py": 286,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 444,
+"py": 291,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 456,
+"py": 291,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 468,
+"py": 293,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 481,
+"py": 299,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 493,
+"py": 298,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 491,
+"py": 290,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 479,
+"py": 279,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 466,
+"py": 264,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 473,
+"py": 247,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 445,
+"py": 254,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 445,
+"py": 266,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 446,
+"py": 271,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 441,
+"py": 279,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 428,
+"py": 278,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 446,
+"py": 265,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 462,
+"py": 278,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 469,
+"py": 253,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 471,
+"py": 255,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 476,
+"py": 250,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 472,
+"py": 255,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 485,
+"py": 256,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 505,
+"py": 259,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 508,
+"py": 267,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 507,
+"py": 260,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 502,
+"py": 267,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 510,
+"py": 277,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 510,
+"py": 275,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 503,
+"py": 271,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 510,
+"py": 248,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 529,
+"py": 233,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 542,
+"py": 232,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 557,
+"py": 219,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 566,
+"py": 205,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 540,
+"py": 207,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 552,
+"py": 216,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 567,
+"py": 224,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 580,
+"py": 211,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 581,
+"py": 217,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 602,
+"py": 216,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 610,
+"py": 203,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 608,
+"py": 201,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 620,
+"py": 214,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 628,
+"py": 221,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 631,
+"py": 235,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 636,
+"py": 259,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 618,
+"py": 279,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 603,
+"py": 277,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 598,
+"py": 267,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 604,
+"py": 282,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 594,
+"py": 290,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 569,
+"py": 283,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 585,
+"py": 285,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 592,
+"py": 257,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 589,
+"py": 261,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 574,
+"py": 276,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 561,
+"py": 275,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 549,
+"py": 274,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 553,
+"py": 272,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 569,
+"py": 266,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 571,
+"py": 264,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 559,
+"py": 265,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 556,
+"py": 270,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 553,
+"py": 271,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 552,
+"py": 273,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 526,
+"py": 281,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 539,
+"py": 277,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 543,
+"py": 276,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 551,
+"py": 273,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 554,
+"py": 271,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 562,
+"py": 269,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 592,
+"py": 274,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 616,
+"py": 290,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 630,
+"py": 291,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 613,
+"py": 277,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 593,
+"py": 283,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 581,
+"py": 287,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 559,
+"py": 282,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 552,
+"py": 272,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 566,
+"py": 268,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 550,
+"py": 274,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 554,
+"py": 284,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 582,
+"py": 286,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 592,
+"py": 309,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 606,
+"py": 333,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 632,
+"py": 331,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 656,
+"py": 333,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 681,
+"py": 351,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 669,
+"py": 368,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 653,
+"py": 387,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 658,
+"py": 419,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 667,
+"py": 441,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 669,
+"py": 470,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 682,
+"py": 481,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 684,
+"py": 480,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 694,
+"py": 466,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 688,
+"py": 446,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 680,
+"py": 449,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 695,
+"py": 434,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 719,
+"py": 425,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 743,
+"py": 427,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 740,
+"py": 428,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 747,
+"py": 434,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 748,
+"py": 435,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 749,
+"py": 441,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 761,
+"py": 463,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 755,
+"py": 487,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 760,
+"py": 483,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 766,
+"py": 490,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 774,
+"py": 489,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 779,
+"py": 485,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 770,
+"py": 476,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 771,
+"py": 473,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 767,
+"py": 471,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 753,
+"py": 479,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 745,
+"py": 481,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 751,
+"py": 499,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 747,
+"py": 487,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 740,
+"py": 462,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 752,
+"py": 437,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 769,
+"py": 419,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 790,
+"py": 417,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 810,
+"py": 411,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 817,
+"py": 417,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 832,
+"py": 416,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 834,
+"py": 403,
+"event": "Position"
+}
+],
+"events": [
+{
+"ts_ms": 1770,
+"px": 444,
+"py": 278,
+"event": "BotKill"
+},
+{
+"ts_ms": 1770,
+"px": 428,
+"py": 279,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 469,
+"py": 253,
+"event": "BotKill"
+},
+{
+"ts_ms": 1770,
+"px": 471,
+"py": 255,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 472,
+"py": 255,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 506,
+"py": 259,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 508,
+"py": 267,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 507,
+"py": 260,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 514,
+"py": 276,
+"event": "BotKill"
+},
+{
+"ts_ms": 1770,
+"px": 540,
+"py": 232,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 581,
+"py": 217,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 602,
+"py": 216,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 608,
+"py": 200,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 618,
+"py": 279,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 598,
+"py": 267,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 593,
+"py": 257,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 561,
+"py": 275,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 633,
+"py": 289,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 740,
+"py": 428,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 741,
+"py": 429,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 748,
+"py": 435,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 766,
+"py": 490,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 769,
+"py": 476,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 771,
+"py": 473,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 767,
+"py": 471,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 745,
+"py": 481,
+"event": "Loot"
+}
+]
+}
+],
+"bounds": {
+"ts_min_ms": 1770,
+"ts_max_ms": 1770
+}
+}

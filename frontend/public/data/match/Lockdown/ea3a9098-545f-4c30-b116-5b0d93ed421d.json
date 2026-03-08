@@ -1,0 +1,144 @@
+{
+"match_id": "ea3a9098-545f-4c30-b116-5b0d93ed421d",
+"map_id": "Lockdown",
+"players": [
+{
+"user_id": "b3340cc5-c9fa-4108-b56d-0728bc978a22",
+"is_bot": false,
+"positions": [
+{
+"ts_ms": 1770,
+"px": 424,
+"py": 286,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 427,
+"py": 282,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 430,
+"py": 278,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 429,
+"py": 277,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 430,
+"py": 271,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 433,
+"py": 268,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 436,
+"py": 268,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 442,
+"py": 270,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 448,
+"py": 273,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 448,
+"py": 274,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 458,
+"py": 278,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 461,
+"py": 281,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 471,
+"py": 291,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 468,
+"py": 293,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 461,
+"py": 285,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 455,
+"py": 286,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 464,
+"py": 297,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 482,
+"py": 317,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 491,
+"py": 306,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 496,
+"py": 309,
+"event": "Position"
+}
+],
+"events": [
+{
+"ts_ms": 1770,
+"px": 499,
+"py": 308,
+"event": "BotKilled"
+}
+]
+}
+],
+"bounds": {
+"ts_min_ms": 1770,
+"ts_max_ms": 1770
+}
+}

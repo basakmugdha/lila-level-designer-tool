@@ -1,0 +1,54 @@
+{
+"match_id": "f0509ef9-0bb8-4aa0-ae01-ba9672873c5a",
+"map_id": "GrandRift",
+"players": [
+{
+"user_id": "db454a35-d216-4379-b140-2931160c7d8a",
+"is_bot": false,
+"positions": [
+{
+"ts_ms": 1770,
+"px": 319,
+"py": 387,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 304,
+"py": 392,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 298,
+"py": 369,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 322,
+"py": 350,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 333,
+"py": 355,
+"event": "Position"
+}
+],
+"events": [
+{
+"ts_ms": 1770,
+"px": 332,
+"py": 355,
+"event": "BotKilled"
+}
+]
+}
+],
+"bounds": {
+"ts_min_ms": 1770,
+"ts_max_ms": 1770
+}
+}

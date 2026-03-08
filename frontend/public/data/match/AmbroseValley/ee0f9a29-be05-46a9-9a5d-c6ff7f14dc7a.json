@@ -1,0 +1,150 @@
+{
+"match_id": "ee0f9a29-be05-46a9-9a5d-c6ff7f14dc7a",
+"map_id": "AmbroseValley",
+"players": [
+{
+"user_id": "373c0ec5-2fb0-4fbf-a1c4-69b387d3bcea",
+"is_bot": false,
+"positions": [
+{
+"ts_ms": 1770,
+"px": 96,
+"py": 884,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 114,
+"py": 876,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 148,
+"py": 860,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 161,
+"py": 860,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 158,
+"py": 874,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 172,
+"py": 876,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 180,
+"py": 858,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 176,
+"py": 853,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 179,
+"py": 854,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 171,
+"py": 861,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 172,
+"py": 858,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 179,
+"py": 854,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 178,
+"py": 854,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 176,
+"py": 852,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 178,
+"py": 842,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 174,
+"py": 836,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 192,
+"py": 835,
+"event": "Position"
+}
+],
+"events": [
+{
+"ts_ms": 1770,
+"px": 164,
+"py": 859,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 172,
+"py": 875,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 171,
+"py": 861,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 179,
+"py": 840,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 189,
+"py": 835,
+"event": "BotKilled"
+}
+]
+}
+],
+"bounds": {
+"ts_min_ms": 1770,
+"ts_max_ms": 1770
+}
+}

@@ -1,0 +1,360 @@
+{
+"match_id": "755c0755-8e46-493a-9075-e35b2f5b545b",
+"map_id": "AmbroseValley",
+"players": [
+{
+"user_id": "b81b0753-5bd3-47ed-ac3d-aef168c60351",
+"is_bot": false,
+"positions": [
+{
+"ts_ms": 1770,
+"px": 257,
+"py": 703,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 261,
+"py": 680,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 247,
+"py": 680,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 229,
+"py": 706,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 233,
+"py": 741,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 230,
+"py": 749,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 233,
+"py": 756,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 224,
+"py": 774,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 229,
+"py": 792,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 234,
+"py": 817,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 230,
+"py": 836,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 229,
+"py": 838,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 229,
+"py": 837,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 230,
+"py": 838,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 230,
+"py": 838,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 220,
+"py": 841,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 218,
+"py": 838,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 201,
+"py": 843,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 194,
+"py": 846,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 204,
+"py": 856,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 219,
+"py": 871,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 222,
+"py": 877,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 226,
+"py": 881,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 253,
+"py": 884,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 286,
+"py": 876,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 322,
+"py": 872,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 358,
+"py": 872,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 394,
+"py": 865,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 427,
+"py": 849,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 447,
+"py": 820,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 456,
+"py": 802,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 453,
+"py": 809,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 461,
+"py": 804,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 468,
+"py": 805,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 462,
+"py": 789,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 470,
+"py": 781,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 474,
+"py": 786,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 490,
+"py": 801,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 468,
+"py": 814,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 481,
+"py": 819,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 501,
+"py": 837,
+"event": "Position"
+}
+],
+"events": [
+{
+"ts_ms": 1770,
+"px": 228,
+"py": 768,
+"event": "BotKill"
+},
+{
+"ts_ms": 1770,
+"px": 218,
+"py": 781,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 215,
+"py": 837,
+"event": "BotKill"
+},
+{
+"ts_ms": 1770,
+"px": 215,
+"py": 837,
+"event": "BotKill"
+},
+{
+"ts_ms": 1770,
+"px": 226,
+"py": 839,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 226,
+"py": 839,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 203,
+"py": 841,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 201,
+"py": 844,
+"event": "BotKill"
+},
+{
+"ts_ms": 1770,
+"px": 191,
+"py": 846,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 204,
+"py": 856,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 219,
+"py": 869,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 223,
+"py": 881,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 456,
+"py": 802,
+"event": "BotKill"
+},
+{
+"ts_ms": 1770,
+"px": 457,
+"py": 783,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 457,
+"py": 783,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 470,
+"py": 778,
+"event": "Loot"
+}
+]
+}
+],
+"bounds": {
+"ts_min_ms": 1770,
+"ts_max_ms": 1770
+}
+}

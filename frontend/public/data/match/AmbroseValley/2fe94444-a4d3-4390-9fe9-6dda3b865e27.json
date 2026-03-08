@@ -1,0 +1,114 @@
+{
+"match_id": "2fe94444-a4d3-4390-9fe9-6dda3b865e27",
+"map_id": "AmbroseValley",
+"players": [
+{
+"user_id": "1f62e018-e85e-4317-b72f-696e6e01ab9a",
+"is_bot": false,
+"positions": [
+{
+"ts_ms": 1770,
+"px": 86,
+"py": 866,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 107,
+"py": 874,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 123,
+"py": 869,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 159,
+"py": 859,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 163,
+"py": 849,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 178,
+"py": 851,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 179,
+"py": 851,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 179,
+"py": 852,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 177,
+"py": 849,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 176,
+"py": 851,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 182,
+"py": 862,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 183,
+"py": 855,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 183,
+"py": 854,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 182,
+"py": 847,
+"event": "Position"
+}
+],
+"events": [
+{
+"ts_ms": 1770,
+"px": 162,
+"py": 859,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 182,
+"py": 848,
+"event": "BotKilled"
+}
+]
+}
+],
+"bounds": {
+"ts_min_ms": 1770,
+"ts_max_ms": 1770
+}
+}

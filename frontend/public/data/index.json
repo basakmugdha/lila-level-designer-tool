@@ -1,1 +1,625 @@
-{"days":[],"maps":[{"id":"AmbroseValley","minimap_url":"data/minimaps/AmbroseValley.png"},{"id":"GrandRift","minimap_url":"data/minimaps/GrandRift.png"},{"id":"Lockdown","minimap_url":"data/minimaps/Lockdown.jpg"}],"matches":[]}
+{
+"days": [
+"February_10",
+"February_11",
+"February_12",
+"February_13",
+"February_14"
+],
+"maps": [
+{
+"id": "AmbroseValley",
+"minimap_url": "data/minimaps/AmbroseValley.png"
+},
+{
+"id": "GrandRift",
+"minimap_url": "data/minimaps/GrandRift.png"
+},
+{
+"id": "Lockdown",
+"minimap_url": "data/minimaps/Lockdown.jpg"
+}
+],
+"matches": [
+{
+"match_id": "b71aaad8-aa62-4b3a-8534-927d4de18f22",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "d7e50fad-fb7a-4ed4-932f-e4ca9ff0c97b",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "80369f48-d145-4bfc-b0ee-5e805b9ec289",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "ee0f9a29-be05-46a9-9a5d-c6ff7f14dc7a",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "755c0755-8e46-493a-9075-e35b2f5b545b",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "2f6c96fe-68e4-4961-9230-854c5e1c3d07",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "d2d352df-b017-441b-abb6-e91805a256d6",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "cc30d720-d0b9-499b-b471-27be602dd2d8",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "d238c46e-a74f-4b41-852c-d8ccc028225e",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "0f169d20-5205-4a6c-8334-21965ae5caef",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "9df974e5-e085-4fa3-8f00-cf277d361111",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "d330020b-0b05-464a-918a-d80d71a04839",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "c410ab73-86d8-46fa-9980-c32bf77c5163",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "c3fc27c7-4931-4acb-bdf0-bc13cbf31e2b",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "6b3ec274-cb9e-45c3-ae83-89cf29f3ffe9",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "b971c686-07f6-4378-ad00-71b0b610414e",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "92b5d106-3330-4b1d-abaa-2cb217720076",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "f28c42f8-9cbe-41d3-8506-73fdfa53aa47",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "525deef0-21fb-4f5d-a590-732dda137bdb",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "d11fb223-921a-41e2-a0b0-17e588dcbdba",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "2fe94444-a4d3-4390-9fe9-6dda3b865e27",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "8ebce3e1-daed-439d-bc4b-1d231be2186c",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "3ff97c36-2b5f-4938-92f7-dc1a0ac1a65c",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "59c15157-a3fa-4e94-8195-8c135a8eccf1",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "5def8d6b-ac7c-410a-9931-e208e253ecdb",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "ea5066c9-ddd7-41e1-b73a-6a32c07f06f1",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "b9342345-4315-4008-b2ba-fe280fdc9a66",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "c0cfa073-a670-4eff-a4c0-33102cb47cab",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "c9614640-a991-4f22-9c3f-3688dc591829",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "1f64ee97-e57e-42ad-ae37-e576ec829dcc",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "bac928d8-e20a-4749-87fa-2907dc87acfa",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "41d4555d-1ca9-4e3d-b82f-168bef19d865",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "1b861ea8-d037-4787-b9cc-0d48da944328",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "acfa021d-b0ad-469d-98ee-56eab4edad57",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "5f161b0d-9d06-4604-a615-646c60ba6b03",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "df85107f-d9e8-4c49-bb8e-e75e77ff53ab",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "d1c6c8bb-8065-4db8-bbe8-49b6cd8f8596",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "ff73c97b-3b34-4836-a8a1-47b2f94dd77c",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "5194829f-f015-4600-9a66-2c75c385fcac",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "33a8f288-55fc-4391-a551-91a71020eb9c",
+"day": "February_10",
+"map_id": "AmbroseValley"
+},
+{
+"match_id": "413b9011-a43d-4957-a485-261668c9857b",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "ead4c72d-0e3b-49b4-a91b-a9a21bed8012",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "82e15cd6-9735-4047-9ec6-12f0e883cc4e",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "9c35fb68-708c-4d36-aab2-8c0259c6ce66",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "6284f5e8-99dd-4ffe-b1d1-62c39e996d14",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "ccfa9999-84b1-430a-b632-89ca7fb0df43",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "23d55098-ceb8-4ead-b430-8185dff2ae34",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "05302758-3375-4667-a950-b821b562cdf0",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "88640c36-1c72-4399-9d8e-3c2868c7c750",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "7a38a25b-79c5-4d8e-a879-dafecff87da9",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "85d45de7-73e9-46b8-b58c-2bb46ac99ac4",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "76c17d89-d2e3-4142-bcfc-650cf4b5acab",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "101e9757-9f62-4457-abbd-b84bc04319f4",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "c023194f-82b7-49b3-8bbc-4930786c30e8",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "5c7589c3-b11c-4778-a15c-04afb27cc95d",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "324a7328-d13e-481b-878b-3a65a2de0349",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "1c48990a-5799-4d87-9a85-736088dafc02",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "dbd0fad0-c712-41a9-8bf5-19daa36cacf1",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "4cab7d18-7f25-4e2e-a35c-2061a0ddfd22",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "64354063-f8cc-4035-8013-713a2a7c10fe",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "e81aa645-6565-412d-ba82-454a4ed6d847",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "369db783-01de-4760-84e9-75755ae42c78",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "3770e5eb-0fdb-408f-a8df-5471c6c8782f",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "18c1b2c6-4f87-4200-9816-68fa448de33b",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "bdafe089-3e85-4fd9-8c42-3c090b755abb",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "b5ed9b5b-d24d-49b4-8eac-28573a655e44",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "70dc76be-d3fb-4498-b732-1d86f552a4e7",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "451914d9-d14a-4b23-8ee6-e397dc069183",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "6673fc79-015c-4607-aeeb-4328d8fbbfb6",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "95b770cd-63e0-4635-a817-122514ac98d7",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "1df4b27d-fd0f-475a-bf07-a8ab7c5d546e",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "4ebc4138-8ce2-463b-9dbe-77ed30c19342",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "928b2e35-e09e-49b5-af6f-bdc97bdecdde",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "d7f64643-d253-41c6-8daa-d6b7e770a4a2",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "8e19ad14-1896-4c66-af41-2e07a513c673",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "a76d8d50-782c-4d4d-8e87-a3a6911aff8e",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "2bede3f7-f263-4394-bf49-b9d6aea980de",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "44532bfa-a417-4f1a-b582-e3001f51a935",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "ea3a9098-545f-4c30-b116-5b0d93ed421d",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "4eb7d365-3c0e-4c0d-a7f4-f8e869942b6d",
+"day": "February_10",
+"map_id": "Lockdown"
+},
+{
+"match_id": "7abc3541-fa03-45b8-975b-d754ff33acad",
+"day": "February_10",
+"map_id": "GrandRift"
+},
+{
+"match_id": "a922864b-effa-4ac7-bf67-ea219fd9e5d3",
+"day": "February_10",
+"map_id": "GrandRift"
+},
+{
+"match_id": "1bc5a9de-8f37-4e27-9043-71d3ea331e4f",
+"day": "February_10",
+"map_id": "GrandRift"
+},
+{
+"match_id": "5d315b98-8640-4458-a549-4b0358d0e6c5",
+"day": "February_10",
+"map_id": "GrandRift"
+},
+{
+"match_id": "b2613b77-3878-4431-86ef-df3b0c8b7eb2",
+"day": "February_10",
+"map_id": "GrandRift"
+},
+{
+"match_id": "46a1ace9-e48e-4781-a645-1c5c3abd38d8",
+"day": "February_10",
+"map_id": "GrandRift"
+},
+{
+"match_id": "8b82443e-a6b5-4e0a-86d1-c5a5e4fdada6",
+"day": "February_10",
+"map_id": "GrandRift"
+},
+{
+"match_id": "f20ece47-e9ce-4031-9510-c940497fd8da",
+"day": "February_10",
+"map_id": "GrandRift"
+},
+{
+"match_id": "2d0e75c5-d51e-4434-aad4-b3e683c300bc",
+"day": "February_10",
+"map_id": "GrandRift"
+},
+{
+"match_id": "17e86678-094d-4b90-8b73-87d28aeca271",
+"day": "February_10",
+"map_id": "GrandRift"
+},
+{
+"match_id": "f5d9af7f-7ca2-4420-932d-93fb4bd59acc",
+"day": "February_10",
+"map_id": "GrandRift"
+},
+{
+"match_id": "c3a6fc96-69b6-41a9-ad26-1ac3297e5c65",
+"day": "February_10",
+"map_id": "GrandRift"
+},
+{
+"match_id": "c20a9679-0b84-450d-8669-33e1ac58b742",
+"day": "February_10",
+"map_id": "GrandRift"
+},
+{
+"match_id": "372e5eab-ecf5-4092-83f6-5564f890d390",
+"day": "February_10",
+"map_id": "GrandRift"
+},
+{
+"match_id": "e152a004-1817-43f5-85d8-c2896fbcc4f6",
+"day": "February_10",
+"map_id": "GrandRift"
+},
+{
+"match_id": "18af4ed4-6d5c-4b1d-bb53-1f84beb9acb9",
+"day": "February_10",
+"map_id": "GrandRift"
+},
+{
+"match_id": "e3633d09-4b2a-4955-9001-afcd45b3cc76",
+"day": "February_10",
+"map_id": "GrandRift"
+},
+{
+"match_id": "4aaf3a07-4007-4097-a070-172d38ff1e31",
+"day": "February_10",
+"map_id": "GrandRift"
+},
+{
+"match_id": "1d360601-a6fe-424c-bc3b-85bd964115da",
+"day": "February_10",
+"map_id": "GrandRift"
+},
+{
+"match_id": "62840366-95d3-4138-bf7b-41ab71902c17",
+"day": "February_10",
+"map_id": "GrandRift"
+},
+{
+"match_id": "4930d515-dea0-4edc-9694-66fb09bef906",
+"day": "February_10",
+"map_id": "GrandRift"
+},
+{
+"match_id": "0ef83054-bf85-443c-ac10-342a0bdd5371",
+"day": "February_10",
+"map_id": "GrandRift"
+},
+{
+"match_id": "711c9a67-dd8c-4070-90e4-c606b89c007d",
+"day": "February_10",
+"map_id": "GrandRift"
+},
+{
+"match_id": "faa11b06-6248-4ba0-a269-ec013c35f88f",
+"day": "February_10",
+"map_id": "GrandRift"
+},
+{
+"match_id": "259dd011-cd48-491e-9106-b55d97e7357c",
+"day": "February_11",
+"map_id": "GrandRift"
+},
+{
+"match_id": "d19d188e-a608-4a22-a198-da1a63b43de4",
+"day": "February_11",
+"map_id": "GrandRift"
+},
+{
+"match_id": "f0509ef9-0bb8-4aa0-ae01-ba9672873c5a",
+"day": "February_11",
+"map_id": "GrandRift"
+},
+{
+"match_id": "67a559b6-9a2e-42ce-9850-7ecca12f5f46",
+"day": "February_11",
+"map_id": "GrandRift"
+},
+{
+"match_id": "61a3159e-87d9-45ea-9a69-1c987011d2c1",
+"day": "February_11",
+"map_id": "GrandRift"
+},
+{
+"match_id": "3ee9b693-5689-4307-8ffe-d24b41e15f6c",
+"day": "February_11",
+"map_id": "GrandRift"
+},
+{
+"match_id": "3ee27364-9df3-40ed-a1ba-5b3bfed80c46",
+"day": "February_11",
+"map_id": "GrandRift"
+},
+{
+"match_id": "bee96106-7654-467f-aac4-23c426e16c09",
+"day": "February_11",
+"map_id": "GrandRift"
+},
+{
+"match_id": "a0599e40-8dbb-4c99-b24b-69d7647801f4",
+"day": "February_11",
+"map_id": "GrandRift"
+},
+{
+"match_id": "ae12ac8c-0b2e-4abb-8545-67bb3bee3d18",
+"day": "February_11",
+"map_id": "GrandRift"
+},
+{
+"match_id": "22d06fe8-441b-48b4-b245-493696e5515f",
+"day": "February_11",
+"map_id": "GrandRift"
+},
+{
+"match_id": "2bea666d-f258-4df2-a356-6654d94f8da6",
+"day": "February_11",
+"map_id": "GrandRift"
+},
+{
+"match_id": "0273e16e-9ae9-410b-a22f-04451a416a0d",
+"day": "February_11",
+"map_id": "GrandRift"
+},
+{
+"match_id": "b9d05526-1951-4922-adb0-560bbf174395",
+"day": "February_12",
+"map_id": "GrandRift"
+},
+{
+"match_id": "d7736ded-6fc3-47a6-9a33-70be0fd7dd3e",
+"day": "February_12",
+"map_id": "GrandRift"
+},
+{
+"match_id": "5955ad0c-b2a8-48ac-8ab7-948d3577900a",
+"day": "February_12",
+"map_id": "GrandRift"
+}
+]
+}

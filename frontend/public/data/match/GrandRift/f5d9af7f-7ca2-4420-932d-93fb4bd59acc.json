@@ -1,0 +1,168 @@
+{
+"match_id": "f5d9af7f-7ca2-4420-932d-93fb4bd59acc",
+"map_id": "GrandRift",
+"players": [
+{
+"user_id": "94d042cb-a0f2-45f3-bdca-42fab73cfef5",
+"is_bot": false,
+"positions": [
+{
+"ts_ms": 1770,
+"px": 319,
+"py": 387,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 326,
+"py": 389,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 345,
+"py": 418,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 381,
+"py": 435,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 393,
+"py": 472,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 378,
+"py": 481,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 385,
+"py": 480,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 400,
+"py": 475,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 413,
+"py": 490,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 388,
+"py": 484,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 376,
+"py": 485,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 372,
+"py": 489,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 370,
+"py": 496,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 408,
+"py": 489,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 447,
+"py": 504,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 470,
+"py": 480,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 462,
+"py": 472,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 459,
+"py": 459,
+"event": "Position"
+}
+],
+"events": [
+{
+"ts_ms": 1770,
+"px": 378,
+"py": 481,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 378,
+"py": 481,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 401,
+"py": 475,
+"event": "BotKill"
+},
+{
+"ts_ms": 1770,
+"px": 413,
+"py": 490,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 413,
+"py": 490,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 370,
+"py": 496,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 370,
+"py": 496,
+"event": "Loot"
+}
+]
+}
+],
+"bounds": {
+"ts_min_ms": 1770,
+"ts_max_ms": 1770
+}
+}

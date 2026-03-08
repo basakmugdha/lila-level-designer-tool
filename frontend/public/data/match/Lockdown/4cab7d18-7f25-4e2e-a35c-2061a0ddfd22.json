@@ -1,0 +1,162 @@
+{
+"match_id": "4cab7d18-7f25-4e2e-a35c-2061a0ddfd22",
+"map_id": "Lockdown",
+"players": [
+{
+"user_id": "e7ac0138-4d80-4400-9141-461daa6be8ae",
+"is_bot": false,
+"positions": [
+{
+"ts_ms": 1770,
+"px": 154,
+"py": 372,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 173,
+"py": 375,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 193,
+"py": 382,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 198,
+"py": 375,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 200,
+"py": 387,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 203,
+"py": 392,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 200,
+"py": 398,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 205,
+"py": 392,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 228,
+"py": 397,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 227,
+"py": 407,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 230,
+"py": 404,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 225,
+"py": 421,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 224,
+"py": 413,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 205,
+"py": 414,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 210,
+"py": 410,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 213,
+"py": 409,
+"event": "Position"
+},
+{
+"ts_ms": 1770,
+"px": 209,
+"py": 405,
+"event": "Position"
+}
+],
+"events": [
+{
+"ts_ms": 1770,
+"px": 199,
+"py": 374,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 198,
+"py": 374,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 208,
+"py": 414,
+"event": "BotKill"
+},
+{
+"ts_ms": 1770,
+"px": 206,
+"py": 414,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 206,
+"py": 414,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 206,
+"py": 414,
+"event": "Loot"
+},
+{
+"ts_ms": 1770,
+"px": 209,
+"py": 406,
+"event": "BotKilled"
+}
+]
+}
+],
+"bounds": {
+"ts_min_ms": 1770,
+"ts_max_ms": 1770
+}
+}

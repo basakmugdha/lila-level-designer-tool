@@ -101,14 +101,12 @@ def list_days() -> list[str]:
     return list(DAYS)
 
 
-    return list(seen.values())
-
-
 def get_match_stats(match_id: str, map_id: str) -> dict | None:
-    """Return { kills, loots, storm_deaths } for a match by reading only event column. Returns None if match not found."""
+    """Return { kills, loots, storm_deaths, start_ts_ms } for a match by reading event and ts columns. Returns None if match not found."""
     kills = loots = storm_deaths = 0
+    start_ts_ms = None
     found = False
-    required_cols = ["event", "map_id"]
+    required_cols = ["event", "map_id", "ts"]
     for d in list_days():
         folder = DATA_ROOT / d
         if not folder.is_dir():
@@ -130,6 +128,8 @@ def get_match_stats(match_id: str, map_id: str) -> dict | None:
             file_map = _normalize_map_id(df["map_id"].iloc[0])
             if file_map is None or file_map != map_id:
                 continue
+            if "ts" in df.columns:
+                start_ts_ms = int(_ts_to_ms(df["ts"]).min())
             df["event"] = df["event"].apply(_decode_event)
             for ev in df["event"]:
                 if ev in ("Kill", "BotKill"):
@@ -138,7 +138,10 @@ def get_match_stats(match_id: str, map_id: str) -> dict | None:
                     loots += 1
                 elif ev == "KilledByStorm":
                     storm_deaths += 1
-    return {"kills": kills, "loots": loots, "storm_deaths": storm_deaths} if found else None
+    result = {"kills": kills, "loots": loots, "storm_deaths": storm_deaths}
+    if start_ts_ms is not None:
+        result["start_ts_ms"] = start_ts_ms
+    return result if found else None
 
 
 def list_matches(day: str | None = None, map_id: str | None = None, include_stats: bool = False) -> list[dict]:
@@ -177,6 +180,8 @@ def list_matches(day: str | None = None, map_id: str | None = None, include_stat
                 m["kills"] = stats["kills"]
                 m["loots"] = stats["loots"]
                 m["storm_deaths"] = stats["storm_deaths"]
+                if "start_ts_ms" in stats:
+                    m["start_ts_ms"] = stats["start_ts_ms"]
     return result
 
 

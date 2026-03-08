@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { fetchMaps, fetchMatches, fetchMatch, fetchHeatmap, minimapUrl, preloadMinimap, getDaysForMap, prefetchMatch } from './api';
 import type { MatchData, HeatmapData } from './api';
 import { MapView } from './MapView';
@@ -25,8 +25,9 @@ export default function App() {
   const [selectedDay, setSelectedDay] = useState('');
   const [selectedMatchId, setSelectedMatchId] = useState('');
   const [matchData, setMatchData] = useState<MatchData | null>(null);
-  const [heatmapData, setHeatmapData] = useState<HeatmapData | null>(null);
-  const [heatmapKind, setHeatmapKind] = useState<HeatmapKind>(null);
+  const [heatmapDataMap, setHeatmapDataMap] = useState<Record<HeatmapKind, HeatmapData | null>>({ traffic: null, kills: null, deaths: null });
+  const [heatmapEnabled, setHeatmapEnabled] = useState(false);
+  const [heatmapKinds, setHeatmapKinds] = useState<Set<HeatmapKind>>(new Set());
   const [heatmapLoading, setHeatmapLoading] = useState(false);
   const [currentTimeMs, setCurrentTimeMs] = useState(0);
   const [playing, setPlaying] = useState(false);
@@ -97,8 +98,7 @@ export default function App() {
   useEffect(() => {
     if (!selectedMatchId || !selectedMapId) {
       setMatchData(null);
-      setHeatmapData(null);
-      setHeatmapKind(null);
+      setHeatmapDataMap({ traffic: null, kills: null, deaths: null });
       return;
     }
     setLoadingMatch(true);
@@ -107,8 +107,7 @@ export default function App() {
       .then((data) => {
         setMatchData(data);
         setCurrentTimeMs(data.bounds.ts_min_ms);
-        setHeatmapData(null);
-        setHeatmapKind(null);
+        setHeatmapDataMap({ traffic: null, kills: null, deaths: null });
         setEventTypesShown(DEFAULT_EVENT_TYPES);
       })
       .catch((e) => {
@@ -119,17 +118,29 @@ export default function App() {
   }, [selectedMatchId, selectedMapId]);
 
   useEffect(() => {
-    if (!heatmapKind || !selectedMatchId || !selectedMapId) {
-      setHeatmapData(null);
+    if (!heatmapEnabled || heatmapKinds.size === 0 || !selectedMatchId || !selectedMapId) {
+      setHeatmapDataMap((prev) => (Object.keys(prev).length ? { traffic: null, kills: null, deaths: null } : prev));
       setHeatmapLoading(false);
       return;
     }
     setHeatmapLoading(true);
-    fetchHeatmap(selectedMatchId, selectedMapId, heatmapKind)
-      .then(setHeatmapData)
-      .catch(() => setHeatmapData(null))
+    const kinds = Array.from(heatmapKinds);
+    Promise.all(kinds.map((kind) => fetchHeatmap(selectedMatchId, selectedMapId, kind)))
+      .then((results) => {
+        const next: Record<HeatmapKind, HeatmapData | null> = { traffic: null, kills: null, deaths: null };
+        kinds.forEach((kind, i) => {
+          next[kind] = results[i] ?? null;
+        });
+        setHeatmapDataMap(next);
+      })
+      .catch(() => setHeatmapDataMap({ traffic: null, kills: null, deaths: null }))
       .finally(() => setHeatmapLoading(false));
-  }, [heatmapKind, selectedMatchId, selectedMapId]);
+  }, [heatmapEnabled, heatmapKinds, selectedMatchId, selectedMapId]);
+
+  const heatmapsForView = useMemo(
+    () => (heatmapEnabled ? [heatmapDataMap.traffic, heatmapDataMap.kills, heatmapDataMap.deaths].filter(Boolean) as HeatmapData[] : []),
+    [heatmapEnabled, heatmapDataMap.traffic, heatmapDataMap.kills, heatmapDataMap.deaths]
+  );
 
   const bounds = matchData?.bounds ?? null;
 
@@ -151,13 +162,12 @@ export default function App() {
 
   useEffect(() => {
     if (!matchData) return;
-    const ok =
-      heatmapKind === null ||
-      (heatmapKind === 'traffic' && overlayAvailability.traffic) ||
-      (heatmapKind === 'kills' && overlayAvailability.kills) ||
-      (heatmapKind === 'deaths' && overlayAvailability.deaths);
-    if (!ok) setHeatmapKind(null);
-  }, [matchData, heatmapKind, overlayAvailability.traffic, overlayAvailability.kills, overlayAvailability.deaths]);
+    const next = new Set(heatmapKinds);
+    if (!overlayAvailability.traffic) next.delete('traffic');
+    if (!overlayAvailability.kills) next.delete('kills');
+    if (!overlayAvailability.deaths) next.delete('deaths');
+    if (next.size !== heatmapKinds.size) setHeatmapKinds(next);
+  }, [matchData, heatmapKinds, overlayAvailability.traffic, overlayAvailability.kills, overlayAvailability.deaths]);
 
   const tick = useCallback(() => {
     if (!bounds) return;
@@ -180,8 +190,7 @@ export default function App() {
     <div className="app">
       <header className="app__header">
         <h1><span className="app__brand">LILA BLACK</span> — Level Design Telemetry</h1>
-        <p className="app__subtitle">Explore player movement, combat, and storm deaths on the map.</p>
-        <p className="app__instruction">Select a map, date, and match to view player journeys and enable playback.</p>
+        <p className="app__header-desc">Explore player movement, combat, and storm deaths on the map. Select a map, date, and match to view player journeys and enable playback.</p>
       </header>
 
       {error && (
@@ -229,13 +238,13 @@ export default function App() {
             <MapView
               matchData={matchData}
               currentTimeMs={currentTimeMs}
-              heatmap={heatmapData}
+              heatmaps={heatmapsForView}
               minimapUrl={selectedMapId ? minimapUrl(selectedMapId) : ''}
               showOnlyHumanPaths={showOnlyHumanPaths}
               eventTypesShown={eventTypesShown}
             />
           </div>
-          {(loadingMatch && selectedMatchId) || (heatmapLoading && heatmapKind) ? (
+          {(loadingMatch && selectedMatchId) || (heatmapLoading && heatmapEnabled && heatmapKinds.size > 0) ? (
             <div className="map-loading-overlay" role="status" aria-live="polite" aria-busy="true">
               <div className="map-loading-overlay__spinner" aria-hidden />
               <span className="map-loading-overlay__text">
@@ -248,8 +257,10 @@ export default function App() {
           <div className="card">
             <p className="card__title">Overlays</p>
             <HeatmapControls
-              heatmapKind={heatmapKind}
-              onHeatmapChange={setHeatmapKind}
+              heatmapEnabled={heatmapEnabled}
+              onHeatmapEnabledChange={setHeatmapEnabled}
+              heatmapKinds={heatmapKinds}
+              onHeatmapKindsChange={setHeatmapKinds}
               disabled={!matchData || loadingMatch}
               heatmapLoading={heatmapLoading}
               availableOverlays={overlayAvailability}

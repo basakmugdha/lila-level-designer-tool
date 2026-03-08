@@ -35,7 +35,7 @@ const matchCache = new Map<string, MatchData>();
 const MATCH_CACHE_MAX = 40;
 
 export type MapInfo = { id: string; minimap_url: string };
-export type MatchInfo = { match_id: string; day: string; map_id: string; kills?: number; loots?: number; storm_deaths?: number };
+export type MatchInfo = { match_id: string; day: string; map_id: string; kills?: number; loots?: number; storm_deaths?: number; start_ts_ms?: number };
 
 export type PositionPoint = { ts_ms: number; px: number; py: number; event: string };
 export type PlayerJourney = {

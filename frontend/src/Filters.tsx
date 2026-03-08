@@ -1,5 +1,21 @@
 import type { MapInfo, MatchInfo } from './api';
 
+/** Format match for display: use start time when available, else fallback to id + day */
+function formatMatchLabel(m: MatchInfo): string {
+  if (m.start_ts_ms != null) {
+    const d = new Date(m.start_ts_ms);
+    return d.toLocaleString(undefined, {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+    });
+  }
+  return `${m.match_id.slice(0, 8)}… (${m.day})`;
+}
+
 export type MatchFilterKind = 'default' | 'maxKills' | 'maxLoots' | 'maxStormDeaths';
 
 export function Filters({
@@ -101,7 +117,7 @@ export function Filters({
           ) : (
             matches.map((m) => (
               <option key={m.match_id} value={m.match_id}>
-                {m.match_id.slice(0, 8)}… ({m.day})
+                {formatMatchLabel(m)}
               </option>
             ))
           )}

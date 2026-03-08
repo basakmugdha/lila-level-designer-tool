@@ -15,14 +15,14 @@ const EVENT_COLORS: Record<string, string> = {
 export function MapView({
   matchData,
   currentTimeMs,
-  heatmap,
+  heatmaps,
   minimapUrl,
   showOnlyHumanPaths,
   eventTypesShown,
 }: {
   matchData: MatchData | null;
   currentTimeMs: number;
-  heatmap: HeatmapData | null;
+  heatmaps: HeatmapData[];
   minimapUrl: string;
   showOnlyHumanPaths: boolean;
   eventTypesShown: Set<string>;
@@ -95,9 +95,9 @@ export function MapView({
     }));
   }, [viewSize.w, viewSize.h, mapSize]);
 
-  // Pre-render heatmap to offscreen canvas so we only run the grid loop when heatmap changes
+  // Pre-render heatmaps to a single offscreen canvas (all layers composited in order)
   useEffect(() => {
-    if (!heatmap?.grid) {
+    if (!heatmaps.length || heatmaps.some((h) => !h?.grid)) {
       heatmapLayerRef.current = null;
       return;
     }
@@ -106,29 +106,32 @@ export function MapView({
     off.height = MINIMAP_SIZE;
     const ctx = off.getContext('2d');
     if (!ctx) return;
-    const g = heatmap.grid;
-    const cellW = MINIMAP_SIZE / heatmap.grid_size;
-    const cellH = MINIMAP_SIZE / heatmap.grid_size;
-    const maxVal = heatmap.max_val || 1;
-    for (let j = 0; j < heatmap.grid_size; j++) {
-      for (let i = 0; i < heatmap.grid_size; i++) {
-        const v = g[j][i] / maxVal;
-        if (v <= 0) continue;
-        const alpha = 0.5 + 0.5 * v;
-        let r = 0, g_ = 0, b = 0;
-        if (heatmap.kind === 'traffic') {
-          r = 0.15; g_ = 0.55; b = 1;
-        } else if (heatmap.kind === 'kills') {
-          r = 1; g_ = 0.15; b = 0.2;
-        } else {
-          r = 0.75; g_ = 0; b = 0.85;
+    for (const heatmap of heatmaps) {
+      if (!heatmap?.grid) continue;
+      const g = heatmap.grid;
+      const cellW = MINIMAP_SIZE / heatmap.grid_size;
+      const cellH = MINIMAP_SIZE / heatmap.grid_size;
+      const maxVal = heatmap.max_val || 1;
+      for (let j = 0; j < heatmap.grid_size; j++) {
+        for (let i = 0; i < heatmap.grid_size; i++) {
+          const v = g[j][i] / maxVal;
+          if (v <= 0) continue;
+          const alpha = 0.5 + 0.5 * v;
+          let r = 0, g_ = 0, b = 0;
+          if (heatmap.kind === 'traffic') {
+            r = 0.15; g_ = 0.55; b = 1;
+          } else if (heatmap.kind === 'kills') {
+            r = 1; g_ = 0.15; b = 0.2;
+          } else {
+            r = 0.75; g_ = 0; b = 0.85;
+          }
+          ctx.fillStyle = `rgba(${r * 255},${g_ * 255},${b * 255},${alpha})`;
+          ctx.fillRect(i * cellW, j * cellH, cellW + 1, cellH + 1);
         }
-        ctx.fillStyle = `rgba(${r * 255},${g_ * 255},${b * 255},${alpha})`;
-        ctx.fillRect(i * cellW, j * cellH, cellW + 1, cellH + 1);
       }
     }
     heatmapLayerRef.current = off;
-  }, [heatmap]);
+  }, [heatmaps]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -153,26 +156,29 @@ export function MapView({
     const heatmapLayer = heatmapLayerRef.current;
     if (heatmapLayer) {
       ctx.drawImage(heatmapLayer, 0, 0, MINIMAP_SIZE, MINIMAP_SIZE);
-    } else if (heatmap?.grid) {
-      const g = heatmap.grid;
-      const cellW = MINIMAP_SIZE / heatmap.grid_size;
-      const cellH = MINIMAP_SIZE / heatmap.grid_size;
-      const maxVal = heatmap.max_val || 1;
-      for (let j = 0; j < heatmap.grid_size; j++) {
-        for (let i = 0; i < heatmap.grid_size; i++) {
-          const v = g[j][i] / maxVal;
-          if (v <= 0) continue;
-          const alpha = 0.5 + 0.5 * v;
-          let r = 0, g_ = 0, b = 0;
-          if (heatmap.kind === 'traffic') {
-            r = 0.15; g_ = 0.55; b = 1;
-          } else if (heatmap.kind === 'kills') {
-            r = 1; g_ = 0.15; b = 0.2;
-          } else {
-            r = 0.75; g_ = 0; b = 0.85;
+    } else if (heatmaps.length > 0) {
+      for (const heatmap of heatmaps) {
+        if (!heatmap?.grid) continue;
+        const g = heatmap.grid;
+        const cellW = MINIMAP_SIZE / heatmap.grid_size;
+        const cellH = MINIMAP_SIZE / heatmap.grid_size;
+        const maxVal = heatmap.max_val || 1;
+        for (let j = 0; j < heatmap.grid_size; j++) {
+          for (let i = 0; i < heatmap.grid_size; i++) {
+            const v = g[j][i] / maxVal;
+            if (v <= 0) continue;
+            const alpha = 0.5 + 0.5 * v;
+            let r = 0, g_ = 0, b = 0;
+            if (heatmap.kind === 'traffic') {
+              r = 0.15; g_ = 0.55; b = 1;
+            } else if (heatmap.kind === 'kills') {
+              r = 1; g_ = 0.15; b = 0.2;
+            } else {
+              r = 0.75; g_ = 0; b = 0.85;
+            }
+            ctx.fillStyle = `rgba(${r * 255},${g_ * 255},${b * 255},${alpha})`;
+            ctx.fillRect(i * cellW, j * cellH, cellW + 1, cellH + 1);
           }
-          ctx.fillStyle = `rgba(${r * 255},${g_ * 255},${b * 255},${alpha})`;
-          ctx.fillRect(i * cellW, j * cellH, cellW + 1, cellH + 1);
         }
       }
     }
@@ -220,7 +226,7 @@ export function MapView({
         ctx.stroke();
       }
     }
-  }, [matchData, currentTimeMs, heatmap, minimapUrl, showOnlyHumanPaths, eventTypesShown, mapSize]);
+  }, [matchData, currentTimeMs, heatmaps, minimapUrl, showOnlyHumanPaths, eventTypesShown, mapSize]);
 
   if (!matchData) {
     return (

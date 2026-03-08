@@ -1,72 +1,88 @@
-export type HeatmapKind = 'traffic' | 'kills' | 'deaths' | null;
+export type HeatmapKind = 'traffic' | 'kills' | 'deaths';
 
 export type OverlayAvailability = { traffic: boolean; kills: boolean; deaths: boolean };
 
 export function HeatmapControls({
-  heatmapKind,
-  onHeatmapChange,
+  heatmapEnabled,
+  onHeatmapEnabledChange,
+  heatmapKinds,
+  onHeatmapKindsChange,
   disabled,
   heatmapLoading = false,
   availableOverlays = { traffic: true, kills: true, deaths: true },
 }: {
-  heatmapKind: HeatmapKind;
-  onHeatmapChange: (kind: HeatmapKind) => void;
+  heatmapEnabled: boolean;
+  onHeatmapEnabledChange: (enabled: boolean) => void;
+  heatmapKinds: Set<HeatmapKind>;
+  onHeatmapKindsChange: (kinds: Set<HeatmapKind>) => void;
   disabled: boolean;
   heatmapLoading?: boolean;
   availableOverlays?: OverlayAvailability;
 }) {
+  const toggleKind = (kind: HeatmapKind) => {
+    const next = new Set(heatmapKinds);
+    if (next.has(kind)) next.delete(kind);
+    else next.add(kind);
+    onHeatmapKindsChange(next);
+  };
+
   return (
     <div className="heatmap-controls">
-      <span className="heatmap-controls__label">Heatmap overlay</span>
-      <div className="heatmap-controls__options">
-        <label className={`heatmap-controls__option ${heatmapKind === null ? 'heatmap-controls__option--selected' : ''} ${disabled ? 'heatmap-controls__option--disabled' : ''}`}>
+      <div className="heatmap-controls__row">
+        <span className="heatmap-controls__label">Heatmap overlay</span>
+        <label className="heatmap-controls__toggle">
           <input
-            type="radio"
-            name="heatmap"
-            checked={heatmapKind === null}
-            onChange={() => onHeatmapChange(null)}
+            type="checkbox"
+            checked={heatmapEnabled}
+            onChange={(e) => onHeatmapEnabledChange(e.target.checked)}
             disabled={disabled}
+            aria-label="Toggle heatmap overlay on or off"
           />
-          Off
+          <span className="heatmap-controls__toggle-slider" aria-hidden />
+          <span className="heatmap-controls__toggle-label">{heatmapEnabled ? 'On' : 'Off'}</span>
         </label>
-        {availableOverlays.traffic && (
-          <label className={`heatmap-controls__option ${heatmapKind === 'traffic' ? 'heatmap-controls__option--selected' : ''} ${disabled ? 'heatmap-controls__option--disabled' : ''}`}>
-            <input
-              type="radio"
-              name="heatmap"
-              checked={heatmapKind === 'traffic'}
-              onChange={() => onHeatmapChange('traffic')}
-              disabled={disabled}
-            />
-            Traffic
-          </label>
-        )}
-        {availableOverlays.kills && (
-          <label className={`heatmap-controls__option ${heatmapKind === 'kills' ? 'heatmap-controls__option--selected' : ''} ${disabled ? 'heatmap-controls__option--disabled' : ''}`}>
-            <input
-              type="radio"
-              name="heatmap"
-              checked={heatmapKind === 'kills'}
-              onChange={() => onHeatmapChange('kills')}
-              disabled={disabled}
-            />
-            Kills
-          </label>
-        )}
-        {availableOverlays.deaths && (
-          <label className={`heatmap-controls__option ${heatmapKind === 'deaths' ? 'heatmap-controls__option--selected' : ''} ${disabled ? 'heatmap-controls__option--disabled' : ''}`}>
-            <input
-              type="radio"
-              name="heatmap"
-              checked={heatmapKind === 'deaths'}
-              onChange={() => onHeatmapChange('deaths')}
-              disabled={disabled}
-            />
-            Deaths
-          </label>
-        )}
       </div>
-      {heatmapLoading && heatmapKind && (
+      {heatmapEnabled && (
+        <div className="heatmap-controls__options heatmap-controls__options--multi">
+          <span className="heatmap-controls__sublabel">Overlays</span>
+          <div className="heatmap-controls__checkboxes" role="group" aria-label="Select overlay types">
+            {availableOverlays.traffic && (
+              <label className={`heatmap-controls__option heatmap-controls__option--checkbox ${heatmapKinds.has('traffic') ? 'heatmap-controls__option--selected' : ''} ${disabled ? 'heatmap-controls__option--disabled' : ''}`}>
+                <input
+                  type="checkbox"
+                  checked={heatmapKinds.has('traffic')}
+                  onChange={() => toggleKind('traffic')}
+                  disabled={disabled}
+                />
+                Traffic
+              </label>
+            )}
+            {availableOverlays.kills && (
+              <label className={`heatmap-controls__option heatmap-controls__option--checkbox ${heatmapKinds.has('kills') ? 'heatmap-controls__option--selected' : ''} ${disabled ? 'heatmap-controls__option--disabled' : ''}`}>
+                <input
+                  type="checkbox"
+                  checked={heatmapKinds.has('kills')}
+                  onChange={() => toggleKind('kills')}
+                  disabled={disabled}
+                />
+                Kills
+              </label>
+            )}
+            {availableOverlays.deaths && (
+              <label className={`heatmap-controls__option heatmap-controls__option--checkbox ${heatmapKinds.has('deaths') ? 'heatmap-controls__option--selected' : ''} ${disabled ? 'heatmap-controls__option--disabled' : ''}`}>
+                <input
+                  type="checkbox"
+                  checked={heatmapKinds.has('deaths')}
+                  onChange={() => toggleKind('deaths')}
+                  disabled={disabled}
+                />
+                Deaths
+              </label>
+            )}
+          </div>
+        </div>
+      )}
+      {heatmapLoading && heatmapEnabled && heatmapKinds.size > 0 && (
         <span className="heatmap-controls__loading" aria-live="polite">Loading…</span>
       )}
     </div>

@@ -82,6 +82,7 @@ def main():
         m["kills"] = kills
         m["loots"] = loots
         m["storm_deaths"] = storm_deaths
+        m["start_ts_ms"] = data["bounds"]["ts_min_ms"]
         safe = safe_match_id(match_id)
         match_dir = OUT_DIR / "match" / map_id
         match_dir.mkdir(parents=True, exist_ok=True)

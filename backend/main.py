@@ -10,7 +10,11 @@ from fastapi.staticfiles import StaticFiles
 from data_loader import list_days, list_matches, load_match, build_heatmap
 from map_config import MAP_CONFIG
 
-DATA_ROOT = Path(os.environ.get("PLAYER_DATA_ROOT", Path(__file__).resolve().parent.parent))
+_repo_root = Path(__file__).resolve().parent.parent
+_player_data = _repo_root / "player_data"
+DATA_ROOT = Path(
+    os.environ.get("PLAYER_DATA_ROOT", _player_data if _player_data.is_dir() else _repo_root)
+)
 MINIMAP_NAMES = {
     "AmbroseValley": "AmbroseValley_Minimap.png",
     "GrandRift": "GrandRift_Minimap.png",

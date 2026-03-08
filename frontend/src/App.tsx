@@ -116,8 +116,8 @@ export default function App() {
   return (
     <div className="app">
       <header className="app__header">
-        <h1>LILA BLACK — Level Design Telemetry</h1>
-        <p className="app__subtitle">Explore player movement, combat, and storm deaths on the map.</p>
+        <h1><span className="app__brand">LILA BLACK</span> — Level Design Telemetry</h1>
+        <p className="app__subtitle">Explore player movement, combat, and storm deaths on the map. Pick a map, date, and match to view journeys and heatmaps.</p>
       </header>
 
       {error && (
@@ -126,45 +126,63 @@ export default function App() {
         </div>
       )}
 
-      <Filters
-        maps={maps}
-        days={days}
-        matches={matches}
-        selectedMapId={selectedMapId}
-        selectedDay={selectedDay}
-        selectedMatchId={selectedMatchId}
-        onMapChange={setSelectedMapId}
-        onDayChange={setSelectedDay}
-        onMatchChange={setSelectedMatchId}
-        loadingMatches={loadingMatches}
-      />
-
-      <HeatmapControls
-        heatmapKind={heatmapKind}
-        onHeatmapChange={setHeatmapKind}
-        disabled={!matchData || loadingMatch}
-      />
-
-      {matchData && <MatchSummary data={matchData} />}
-
-      <div className="app__main">
-        <MapView
-          matchData={matchData}
-          currentTimeMs={currentTimeMs}
-          heatmap={heatmapData}
-          minimapUrl={selectedMapId ? minimapUrl(selectedMapId) : ''}
-          showOnlyHumanPaths={showOnlyHumanPaths}
-          eventTypesShown={eventTypesShown}
-        />
-        <aside className="app__sidebar">
-          <ViewOptions
-            showOnlyHumans={showOnlyHumanPaths}
-            onShowOnlyHumansChange={setShowOnlyHumanPaths}
-            eventGroupsShown={eventTypesShown}
-            onEventGroupsShownChange={setEventTypesShown}
+      <div className="app__controls">
+        <div className="card">
+          <p className="card__title">Choose match</p>
+          <Filters
+            maps={maps}
+            days={days}
+            matches={matches}
+            selectedMapId={selectedMapId}
+            selectedDay={selectedDay}
+            selectedMatchId={selectedMatchId}
+            onMapChange={setSelectedMapId}
+            onDayChange={setSelectedDay}
+            onMatchChange={setSelectedMatchId}
+            loadingMatches={loadingMatches}
+          />
+        </div>
+        <div className="card">
+          <p className="card__title">Overlays</p>
+          <HeatmapControls
+            heatmapKind={heatmapKind}
+            onHeatmapChange={setHeatmapKind}
             disabled={!matchData || loadingMatch}
           />
-          <Legend />
+          {matchData && (
+            <div className="match-summary">
+              <MatchSummary data={matchData} />
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="app__main">
+        <div className={`map-view${loadingMatch && selectedMatchId ? ' map-view--loading' : ''}`}>
+          <MapView
+            matchData={matchData}
+            currentTimeMs={currentTimeMs}
+            heatmap={heatmapData}
+            minimapUrl={selectedMapId ? minimapUrl(selectedMapId) : ''}
+            showOnlyHumanPaths={showOnlyHumanPaths}
+            eventTypesShown={eventTypesShown}
+          />
+        </div>
+        <aside className="app__sidebar">
+          <div className="card">
+            <p className="card__title">Display options</p>
+            <ViewOptions
+              showOnlyHumans={showOnlyHumanPaths}
+              onShowOnlyHumansChange={setShowOnlyHumanPaths}
+              eventGroupsShown={eventTypesShown}
+              onEventGroupsShownChange={setEventTypesShown}
+              disabled={!matchData || loadingMatch}
+            />
+          </div>
+          <div className="card">
+            <p className="card__title">Legend</p>
+            <Legend />
+          </div>
         </aside>
       </div>
 

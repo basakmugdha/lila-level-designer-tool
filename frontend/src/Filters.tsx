@@ -26,10 +26,11 @@ export function Filters({
   return (
     <div className="filters">
       <label className="filter-group">
-        <span>Map</span>
+        <span className="filter-group__label">Map</span>
         <select
           value={selectedMapId}
           onChange={(e) => onMapChange(e.target.value)}
+          aria-label="Select map"
         >
           <option value="">— Select map —</option>
           {maps.map((m) => (
@@ -38,10 +39,11 @@ export function Filters({
         </select>
       </label>
       <label className="filter-group">
-        <span>Date</span>
+        <span className="filter-group__label">Date</span>
         <select
           value={selectedDay}
           onChange={(e) => onDayChange(e.target.value)}
+          aria-label="Select date"
         >
           <option value="">— Select day —</option>
           {days.map((d) => (
@@ -50,11 +52,13 @@ export function Filters({
         </select>
       </label>
       <label className="filter-group">
-        <span>Match</span>
+        <span className="filter-group__label">Match</span>
         <select
           value={selectedMatchId}
           onChange={(e) => onMatchChange(e.target.value)}
           disabled={loadingMatches || !selectedMapId}
+          aria-label="Select match"
+          aria-busy={loadingMatches}
         >
           <option value="">— Select match —</option>
           {matches.map((m) => (

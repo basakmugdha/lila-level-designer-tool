@@ -21,8 +21,8 @@ export function ViewOptions({
   disabled: boolean;
 }) {
   return (
-    <div className="view-options">
-      <label className="view-options__row">
+    <div className={`view-options ${disabled ? 'view-options--disabled' : ''}`}>
+      <label className={`view-options__row ${disabled ? 'view-options__row--disabled' : ''}`}>
         <input
           type="checkbox"
           checked={showOnlyHumans}
@@ -34,7 +34,7 @@ export function ViewOptions({
       <div className="view-options__events">
         <span className="view-options__label">Show events:</span>
         {EVENT_GROUPS.map((g) => (
-          <label key={g.key} className="view-options__row view-options__row--inline">
+          <label key={g.key} className={`view-options__row view-options__row--inline ${disabled ? 'view-options__row--disabled' : ''}`}>
             <input
               type="checkbox"
               checked={g.events.some((e) => eventGroupsShown.has(e))}

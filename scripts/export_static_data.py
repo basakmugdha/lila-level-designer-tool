@@ -38,7 +38,9 @@ def main():
     ap.add_argument("--limit", type=int, default=0, help="Max matches to export per map (0 = all)")
     args = ap.parse_args()
 
-    data_root = Path(os.environ.get("PLAYER_DATA_ROOT", REPO_ROOT))
+    data_root = Path(os.environ.get("PLAYER_DATA_ROOT", REPO_ROOT / "player_data"))
+    if not data_root.is_dir():
+        data_root = REPO_ROOT
     if not (data_root / "February_10").exists():
         print("Error: February_10 not found. Set PLAYER_DATA_ROOT to the folder containing the parquet data.")
         sys.exit(1)

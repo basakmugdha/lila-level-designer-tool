@@ -1,5 +1,18 @@
 # Deployment — LILA BLACK Telemetry Viewer
 
+## Quick: Make the tool functional (local + shareable link)
+
+- **Data location:** Parquet data lives in `player_data/` (February_10 … February_14, minimaps). The backend and export script default to `player_data/` when present, so no env var is required for local runs from the repo root.
+- **Local (full parquet):** Start the backend, then the frontend. Pick **Map**, **Date**, and **Match**; the minimap, player paths, event markers, timeline, and heatmaps will work.
+- **Shareable link (GitHub Pages, static):** Export static JSON once, then deploy:
+  ```bash
+  # From repo root (install backend deps if needed: pip install -r backend/requirements.txt)
+  python3 scripts/export_static_data.py --limit 50
+  ```
+  Commit `frontend/public/data/`, enable GitHub Pages (Source: GitHub Actions), and push. The site will have days and matches; users pick map, date, match and use playback and heatmaps as with the local backend.
+
+---
+
 The app can be deployed in two ways:
 
 - **GitHub Pages (static, no server)** — Best for a shareable public link. Data is pre-exported to JSON. See **[GITHUB_PAGES.md](GITHUB_PAGES.md)** for step-by-step setup.
@@ -9,21 +22,21 @@ The app can be deployed in two ways:
 
 ## Option 1: Run locally (development)
 
-**Terminal 1 — Backend**
+**Terminal 1 — Backend** (uses `player_data/` by default if present)
 
 ```bash
-cd player_data/backend
+cd backend
 python3 -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
-export PLAYER_DATA_ROOT=/path/to/player_data   # parent of February_10, minimaps, etc.
+# Optional: export PLAYER_DATA_ROOT=/path/to/player_data   # default: repo root or repo/player_data
 uvicorn main:app --reload --port 8000
 ```
 
 **Terminal 2 — Frontend** (with proxy to backend)
 
 ```bash
-cd player_data/frontend
+cd frontend
 npm install
 npm run dev
 ```

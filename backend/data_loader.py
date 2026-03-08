@@ -7,8 +7,12 @@ import pyarrow.parquet as pq
 
 from map_config import MAP_CONFIG, world_to_pixel
 
-# Default data root: parent of backend folder
-DATA_ROOT = Path(os.environ.get("PLAYER_DATA_ROOT", Path(__file__).resolve().parent.parent))
+# Default data root: repo/player_data if it exists, else parent of backend folder
+_repo_root = Path(__file__).resolve().parent.parent
+_player_data = _repo_root / "player_data"
+DATA_ROOT = Path(
+    os.environ.get("PLAYER_DATA_ROOT", _player_data if _player_data.is_dir() else _repo_root)
+)
 DAYS = ["February_10", "February_11", "February_12", "February_13", "February_14"]
 
 

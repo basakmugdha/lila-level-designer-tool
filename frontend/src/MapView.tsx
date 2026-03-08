@@ -119,7 +119,13 @@ export function MapView({
   if (!matchData) {
     return (
       <div className="map-view map-view--empty">
-        <p>Select a map, date, and match to view player journeys.</p>
+        <div className="map-view__empty-icon" aria-hidden>🗺️</div>
+        <p style={{ margin: 0 }}>Select a map, date, and match to view player journeys.</p>
+        <ol className="map-view__empty-steps" role="list">
+          <li><span className="step-num">1</span> Choose a <strong>Map</strong></li>
+          <li><span className="step-num">2</span> Pick a <strong>Date</strong></li>
+          <li><span className="step-num">3</span> Select a <strong>Match</strong></li>
+        </ol>
       </div>
     );
   }

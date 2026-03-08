@@ -314,10 +314,12 @@ body {
 }
 
 .map-view__minimap {
-  width: 512px;
-  height: 512px;
+  --map-size: min(480px, min(100vw - 2rem, 100vh - 320px));
+  width: var(--map-size);
+  height: var(--map-size);
   max-width: 100%;
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
   background-position: center;
   border-radius: var(--radius);
   overflow: hidden;
@@ -333,6 +335,7 @@ body {
   width: 100%;
   height: 100%;
   pointer-events: none;
+  display: block;
 }
 
 .map-view--loading .map-view__minimap {
@@ -574,10 +577,10 @@ body {
   }
 
   .map-view__minimap {
-    width: 100%;
-    height: auto;
+    --map-size: min(100%, 480px);
+    width: var(--map-size);
+    height: var(--map-size);
     aspect-ratio: 1;
-    max-width: 480px;
   }
 }
 

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { MatchData, HeatmapData } from './api';
 
 const MINIMAP_SIZE = 1024;
@@ -28,28 +28,47 @@ export function MapView({
   eventTypesShown: Set<string>;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [displaySize, setDisplaySize] = useState(480);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const update = () => {
+      const w = el.clientWidth;
+      const h = el.clientHeight;
+      if (w > 0 && h > 0) setDisplaySize(Math.min(w, h));
+    };
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [matchData]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas || !matchData) return;
+    const container = containerRef.current;
+    if (!canvas || !matchData || !container) return;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    const size = Math.min(container.clientWidth, container.clientHeight, 1024) || 480;
     const dpr = window.devicePixelRatio || 1;
-    const size = Math.min(600, window.innerWidth - 32, MINIMAP_SIZE);
-    canvas.width = size * dpr;
-    canvas.height = size * dpr;
+    const buffer = Math.min(size * dpr, 1024);
+    canvas.width = buffer;
+    canvas.height = buffer;
     canvas.style.width = `${size}px`;
     canvas.style.height = `${size}px`;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const scale = size / MINIMAP_SIZE;
-    ctx.clearRect(0, 0, size, size);
+    const scale = buffer / MINIMAP_SIZE;
+    ctx.setTransform(scale, 0, 0, scale, 0, 0);
+    ctx.clearRect(0, 0, MINIMAP_SIZE, MINIMAP_SIZE);
+
     // 1. Heatmap overlay (below paths)
     if (heatmap && heatmap.grid) {
       const g = heatmap.grid;
-      const cellW = (size / heatmap.grid_size);
-      const cellH = (size / heatmap.grid_size);
+      const cellW = MINIMAP_SIZE / heatmap.grid_size;
+      const cellH = MINIMAP_SIZE / heatmap.grid_size;
       const maxVal = heatmap.max_val || 1;
       for (let j = 0; j < heatmap.grid_size; j++) {
         for (let i = 0; i < heatmap.grid_size; i++) {
@@ -84,8 +103,8 @@ export function MapView({
       let first = true;
       for (const pt of player.positions) {
         if (pt.ts_ms > currentTimeMs) break;
-        const x = pt.px * scale;
-        const y = pt.py * scale;
+        const x = pt.px;
+        const y = pt.py;
         if (first) {
           ctx.moveTo(x, y);
           first = false;
@@ -107,14 +126,12 @@ export function MapView({
         ctx.strokeStyle = '#fff';
         ctx.lineWidth = 1;
         ctx.beginPath();
-        const x = ev.px * scale;
-        const y = ev.py * scale;
-        ctx.arc(x, y, ev.event === 'Loot' ? 3 : 5, 0, Math.PI * 2);
+        ctx.arc(ev.px, ev.py, ev.event === 'Loot' ? 3 : 5, 0, Math.PI * 2);
         ctx.fill();
         ctx.stroke();
       }
     }
-  }, [matchData, currentTimeMs, heatmap, minimapUrl, showOnlyHumanPaths, eventTypesShown]);
+  }, [matchData, currentTimeMs, heatmap, minimapUrl, showOnlyHumanPaths, eventTypesShown, displaySize]);
 
   if (!matchData) {
     return (
@@ -132,7 +149,7 @@ export function MapView({
 
   return (
     <div className="map-view">
-      <div className="map-view__minimap" style={{ backgroundImage: `url(${minimapUrl})` }}>
+      <div ref={containerRef} className="map-view__minimap" style={{ backgroundImage: minimapUrl ? `url(${minimapUrl})` : undefined }}>
         <canvas ref={canvasRef} className="map-view__canvas" width={MINIMAP_SIZE} height={MINIMAP_SIZE} />
       </div>
     </div>

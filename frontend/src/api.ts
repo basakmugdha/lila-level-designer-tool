@@ -65,9 +65,9 @@ export async function fetchMatches(day?: string, map_id?: string): Promise<{ mat
     const r = await fetch(dataUrl('index.json'));
     if (!r.ok) throw new Error('Failed to fetch index');
     const idx = await r.json();
-    let list = idx.matches as MatchInfo[];
-    if (day) list = list.filter((m) => m.day === day);
-    if (map_id) list = list.filter((m) => m.map_id === map_id);
+    let list = (idx.matches as MatchInfo[]) || [];
+    if (day) list = list.filter((m) => String(m.day || '').trim() === String(day).trim());
+    if (map_id) list = list.filter((m) => String(m.map_id || '').trim() === String(map_id).trim());
     return { matches: list };
   }
   const params = new URLSearchParams();

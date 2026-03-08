@@ -62,7 +62,8 @@ def _parse_filename(name: str) -> tuple[str, str] | None:
 
 
 def list_days() -> list[str]:
-    return [d for d in DAYS if (DATA_ROOT / d).is_dir()]
+    """Return all configured days so the date dropdown is consistent; days without data will show no matches."""
+    return list(DAYS)
 
 
 def list_matches(day: str | None = None, map_id: str | None = None) -> list[dict]:

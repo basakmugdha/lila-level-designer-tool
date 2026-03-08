@@ -10,6 +10,27 @@ function safeMatchId(matchId: string): string {
   return matchId.replace(/\./g, '_');
 }
 
+/** Cached static index (maps, days, matches) – loaded once so all matches are available for filtering. */
+type StaticIndex = { maps: MapInfo[]; days: string[]; matches: MatchInfo[] };
+let staticIndexPromise: Promise<StaticIndex> | null = null;
+
+function getStaticIndex(): Promise<StaticIndex> {
+  if (!USE_STATIC) return Promise.reject(new Error('Not static mode'));
+  if (!staticIndexPromise) {
+    staticIndexPromise = fetch(dataUrl('index.json'))
+      .then((r) => {
+        if (!r.ok) throw new Error('Failed to fetch index');
+        return r.json();
+      })
+      .then((idx) => ({
+        maps: idx.maps || [],
+        days: idx.days || [],
+        matches: (idx.matches as MatchInfo[]) || [],
+      }));
+  }
+  return staticIndexPromise;
+}
+
 export type MapInfo = { id: string; minimap_url: string };
 export type MatchInfo = { match_id: string; day: string; map_id: string };
 
@@ -38,9 +59,7 @@ export type HeatmapData = {
 
 export async function fetchMaps(): Promise<{ maps: MapInfo[] }> {
   if (USE_STATIC) {
-    const r = await fetch(dataUrl('index.json'));
-    if (!r.ok) throw new Error('Failed to fetch index');
-    const idx = await r.json();
+    const idx = await getStaticIndex();
     return { maps: idx.maps };
   }
   const r = await fetch('/api/maps');
@@ -50,9 +69,7 @@ export async function fetchMaps(): Promise<{ maps: MapInfo[] }> {
 
 export async function fetchDays(): Promise<{ days: string[] }> {
   if (USE_STATIC) {
-    const r = await fetch(dataUrl('index.json'));
-    if (!r.ok) throw new Error('Failed to fetch index');
-    const idx = await r.json();
+    const idx = await getStaticIndex();
     return { days: idx.days };
   }
   const r = await fetch('/api/days');
@@ -62,10 +79,8 @@ export async function fetchDays(): Promise<{ days: string[] }> {
 
 export async function fetchMatches(day?: string, map_id?: string): Promise<{ matches: MatchInfo[] }> {
   if (USE_STATIC) {
-    const r = await fetch(dataUrl('index.json'));
-    if (!r.ok) throw new Error('Failed to fetch index');
-    const idx = await r.json();
-    let list = (idx.matches as MatchInfo[]) || [];
+    const idx = await getStaticIndex();
+    let list = idx.matches;
     if (day) list = list.filter((m) => String(m.day || '').trim() === String(day).trim());
     if (map_id) list = list.filter((m) => String(m.map_id || '').trim() === String(map_id).trim());
     return { matches: list };

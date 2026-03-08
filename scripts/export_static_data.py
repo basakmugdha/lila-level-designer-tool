@@ -55,14 +55,16 @@ def main():
     matches = list_matches(day=None, map_id=None)
 
     if args.limit > 0:
-        by_map = {}
+        # Apply limit per (map_id, day) so every date has matches in the dropdown
+        by_map_day = {}
         for m in matches:
-            k = m["map_id"]
-            if k not in by_map:
-                by_map[k] = []
-            if len(by_map[k]) < args.limit:
-                by_map[k].append(m)
-        matches = [m for lst in by_map.values() for m in lst]
+            k = (m["map_id"], m["day"])
+            if k not in by_map_day:
+                by_map_day[k] = []
+            per_key = max(1, args.limit // len(days))  # spread across days
+            if len(by_map_day[k]) < per_key:
+                by_map_day[k].append(m)
+        matches = [m for lst in by_map_day.values() for m in lst]
 
     index = {"days": days, "maps": maps_list, "matches": matches}
     (OUT_DIR / "index.json").write_text(json.dumps(index, indent=0), encoding="utf-8")

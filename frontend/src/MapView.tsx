@@ -30,7 +30,70 @@ export function MapView({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const heatmapLayerRef = useRef<HTMLCanvasElement | null>(null);
-  const [displaySize, setDisplaySize] = useState(480);
+  const [viewSize, setViewSize] = useState({ w: 480, h: 480 });
+  const [pan, setPan] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const panStartRef = useRef<{ x: number; y: number; panX: number; panY: number } | null>(null);
+
+  const mapSize = Math.max(viewSize.w, viewSize.h, 320);
+  const panBounds = {
+    xMin: Math.min((viewSize.w - mapSize) / 2, (mapSize - viewSize.w) / 2),
+    xMax: Math.max((viewSize.w - mapSize) / 2, (mapSize - viewSize.w) / 2),
+    yMin: Math.min((viewSize.h - mapSize) / 2, (mapSize - viewSize.h) / 2),
+    yMax: Math.max((viewSize.h - mapSize) / 2, (mapSize - viewSize.h) / 2),
+  };
+  const clampPan = (p: { x: number; y: number }) => ({
+    x: Math.max(panBounds.xMin, Math.min(panBounds.xMax, p.x)),
+    y: Math.max(panBounds.yMin, Math.min(panBounds.yMax, p.y)),
+  });
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const update = () => {
+      const w = el.clientWidth;
+      const h = el.clientHeight;
+      if (w > 0 && h > 0) setViewSize({ w, h });
+    };
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [matchData]);
+
+  const handlePointerDown = (e: React.PointerEvent) => {
+    if (!matchData || e.button !== 0) return;
+    (e.target as HTMLElement).setPointerCapture(e.pointerId);
+    setIsDragging(true);
+    panStartRef.current = { x: e.clientX, y: e.clientY, panX: pan.x, panY: pan.y };
+  };
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (!panStartRef.current) return;
+    const { x, y, panX, panY } = panStartRef.current;
+    const next = clampPan({ x: panX + (e.clientX - x), y: panY + (e.clientY - y) });
+    setPan(next);
+  };
+  const handlePointerUp = (e: React.PointerEvent) => {
+    if (e.pointerId !== undefined) (e.target as HTMLElement).releasePointerCapture?.(e.pointerId);
+    panStartRef.current = null;
+    setIsDragging(false);
+  };
+  const handlePointerCancel = (e: React.PointerEvent) => {
+    (e.target as HTMLElement).releasePointerCapture?.(e.pointerId);
+    panStartRef.current = null;
+    setIsDragging(false);
+  };
+
+  useEffect(() => {
+    const xMin = Math.min((viewSize.w - mapSize) / 2, (mapSize - viewSize.w) / 2);
+    const xMax = Math.max((viewSize.w - mapSize) / 2, (mapSize - viewSize.w) / 2);
+    const yMin = Math.min((viewSize.h - mapSize) / 2, (mapSize - viewSize.h) / 2);
+    const yMax = Math.max((viewSize.h - mapSize) / 2, (mapSize - viewSize.h) / 2);
+    setPan((p) => ({
+      x: Math.max(xMin, Math.min(xMax, p.x)),
+      y: Math.max(yMin, Math.min(yMax, p.y)),
+    }));
+  }, [viewSize.w, viewSize.h, mapSize]);
 
   // Pre-render heatmap to offscreen canvas so we only run the grid loop when heatmap changes
   useEffect(() => {
@@ -51,34 +114,21 @@ export function MapView({
       for (let i = 0; i < heatmap.grid_size; i++) {
         const v = g[j][i] / maxVal;
         if (v <= 0) continue;
-        let r = 0, g_ = 0, b = 0, a = 0.4 * v;
+        const alpha = 0.5 + 0.5 * v;
+        let r = 0, g_ = 0, b = 0;
         if (heatmap.kind === 'traffic') {
-          r = 0.2; g_ = 0.5; b = 1;
+          r = 0.15; g_ = 0.55; b = 1;
         } else if (heatmap.kind === 'kills') {
-          r = 1; g_ = 0.2; b = 0.2;
+          r = 1; g_ = 0.15; b = 0.2;
         } else {
-          r = 0.6; g_ = 0; b = 0.6;
+          r = 0.75; g_ = 0; b = 0.85;
         }
-        ctx.fillStyle = `rgba(${r * 255},${g_ * 255},${b * 255},${a})`;
+        ctx.fillStyle = `rgba(${r * 255},${g_ * 255},${b * 255},${alpha})`;
         ctx.fillRect(i * cellW, j * cellH, cellW + 1, cellH + 1);
       }
     }
     heatmapLayerRef.current = off;
   }, [heatmap]);
-
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const update = () => {
-      const w = el.clientWidth;
-      const h = el.clientHeight;
-      if (w > 0 && h > 0) setDisplaySize(Math.min(w, h));
-    };
-    update();
-    const ro = new ResizeObserver(update);
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, [matchData]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -88,13 +138,13 @@ export function MapView({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const size = Math.min(container.clientWidth, container.clientHeight, 1024) || 480;
+    const L = mapSize;
     const dpr = window.devicePixelRatio || 1;
-    const buffer = Math.min(size * dpr, 1024);
+    const buffer = Math.min(Math.ceil(L * dpr), 2048);
     canvas.width = buffer;
     canvas.height = buffer;
-    canvas.style.width = `${size}px`;
-    canvas.style.height = `${size}px`;
+    canvas.style.width = `${L}px`;
+    canvas.style.height = `${L}px`;
     const scale = buffer / MINIMAP_SIZE;
     ctx.setTransform(scale, 0, 0, scale, 0, 0);
     ctx.clearRect(0, 0, MINIMAP_SIZE, MINIMAP_SIZE);
@@ -112,15 +162,16 @@ export function MapView({
         for (let i = 0; i < heatmap.grid_size; i++) {
           const v = g[j][i] / maxVal;
           if (v <= 0) continue;
-          let r = 0, g_ = 0, b = 0, a = 0.4 * v;
+          const alpha = 0.5 + 0.5 * v;
+          let r = 0, g_ = 0, b = 0;
           if (heatmap.kind === 'traffic') {
-            r = 0.2; g_ = 0.5; b = 1;
+            r = 0.15; g_ = 0.55; b = 1;
           } else if (heatmap.kind === 'kills') {
-            r = 1; g_ = 0.2; b = 0.2;
+            r = 1; g_ = 0.15; b = 0.2;
           } else {
-            r = 0.6; g_ = 0; b = 0.6;
+            r = 0.75; g_ = 0; b = 0.85;
           }
-          ctx.fillStyle = `rgba(${r * 255},${g_ * 255},${b * 255},${a})`;
+          ctx.fillStyle = `rgba(${r * 255},${g_ * 255},${b * 255},${alpha})`;
           ctx.fillRect(i * cellW, j * cellH, cellW + 1, cellH + 1);
         }
       }
@@ -169,7 +220,7 @@ export function MapView({
         ctx.stroke();
       }
     }
-  }, [matchData, currentTimeMs, heatmap, minimapUrl, showOnlyHumanPaths, eventTypesShown, displaySize]);
+  }, [matchData, currentTimeMs, heatmap, minimapUrl, showOnlyHumanPaths, eventTypesShown, mapSize]);
 
   if (!matchData) {
     return (
@@ -186,9 +237,44 @@ export function MapView({
   }
 
   return (
-    <div className="map-view">
-      <div ref={containerRef} className="map-view__minimap" style={{ backgroundImage: minimapUrl ? `url(${minimapUrl})` : undefined }}>
-        <canvas ref={canvasRef} className="map-view__canvas" width={MINIMAP_SIZE} height={MINIMAP_SIZE} />
+    <div
+      className="map-view map-view--pannable"
+      ref={containerRef}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerLeave={handlePointerUp}
+      onPointerCancel={handlePointerCancel}
+      style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
+    >
+      <div
+        className="map-view__pan"
+        style={{
+          position: 'absolute',
+          left: '50%',
+          top: '50%',
+          width: mapSize,
+          height: mapSize,
+          marginLeft: -mapSize / 2,
+          marginTop: -mapSize / 2,
+          transform: `translate(${pan.x}px, ${pan.y}px)`,
+        }}
+      >
+        <div
+          className="map-view__minimap"
+          style={{
+            width: mapSize,
+            height: mapSize,
+            backgroundImage: minimapUrl ? `url(${minimapUrl})` : undefined,
+          }}
+        >
+          <canvas
+            ref={canvasRef}
+            className="map-view__canvas"
+            width={MINIMAP_SIZE}
+            height={MINIMAP_SIZE}
+          />
+        </div>
       </div>
     </div>
   );

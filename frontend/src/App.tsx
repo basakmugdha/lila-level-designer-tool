@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { fetchMaps, fetchDays, fetchMatches, fetchMatch, fetchHeatmap, minimapUrl, preloadMinimap } from './api';
+import { fetchMaps, fetchMatches, fetchMatch, fetchHeatmap, minimapUrl, preloadMinimap, getDaysForMap } from './api';
 import type { MatchData, HeatmapData } from './api';
 import { MapView } from './MapView';
 import { Filters } from './Filters';
@@ -19,7 +19,7 @@ const DEFAULT_EVENT_TYPES: EventTypeFilter = new Set([
 
 export default function App() {
   const [maps, setMaps] = useState<{ id: string; minimap_url: string }[]>([]);
-  const [days, setDays] = useState<string[]>([]);
+  const [matchesForMap, setMatchesForMap] = useState<{ match_id: string; day: string; map_id: string }[]>([]);
   const [matches, setMatches] = useState<{ match_id: string; day: string; map_id: string }[]>([]);
   const [selectedMapId, setSelectedMapId] = useState('');
   const [selectedDay, setSelectedDay] = useState('');
@@ -38,18 +38,17 @@ export default function App() {
   const [hintMapsForDay, setHintMapsForDay] = useState<string[]>([]);
 
   useEffect(() => {
-    Promise.all([fetchMaps(), fetchDays()])
-      .then(([mapsRes, daysRes]) => {
+    Promise.all([fetchMaps()])
+      .then(([mapsRes]) => {
         setMaps(mapsRes.maps);
-        setDays(daysRes.days);
         if (mapsRes.maps.length && !selectedMapId) setSelectedMapId(mapsRes.maps[0].id);
-        if (daysRes.days.length && !selectedDay) setSelectedDay(daysRes.days[0]);
       })
       .catch((e) => setError(e instanceof Error ? e.message : 'Failed to load'));
   }, []);
 
   useEffect(() => {
     if (!selectedMapId) {
+      setMatchesForMap([]);
       setMatches([]);
       setHintMapsForDay([]);
       return;
@@ -58,42 +57,26 @@ export default function App() {
     setLoadingMatches(true);
     setHintMapsForDay([]);
     preloadMinimap(selectedMapId);
-    fetchMatches(selectedDay || undefined, selectedMapId)
+    fetchMatches(undefined, selectedMapId)
       .then((r) => {
-        setMatches(r.matches);
+        setMatchesForMap(r.matches);
+        const daysForMap = getDaysForMap(r.matches);
+        const effectiveDay =
+          selectedDay && daysForMap.includes(selectedDay) ? selectedDay : (daysForMap[0] || '');
+        if (effectiveDay !== selectedDay) setSelectedDay(effectiveDay);
+        setMatches(r.matches.filter((m) => m.day === effectiveDay));
         setSelectedMatchId('');
-        if (r.matches.length === 0 && selectedMapId) {
-          if (selectedDay) {
-            // This date has no matches for current map. Prefer switching map to one that has this date.
-            fetchMatches(selectedDay, undefined).then((byDay) => {
-              if (byDay.matches.length > 0) {
-                const firstMapWithDay = byDay.matches[0].map_id;
-                setSelectedMapId(firstMapWithDay);
-                setHintMapsForDay(
-                  [...new Set(byDay.matches.map((m) => m.map_id))].filter((id) => id !== firstMapWithDay)
-                );
-              } else {
-                // No matches for this date on any map; fall back to switching day to current map's first available day.
-                fetchMatches(undefined, selectedMapId).then((all) => {
-                  if (all.matches.length > 0) {
-                    setSelectedDay(all.matches[0].day);
-                  }
-                });
-                setHintMapsForDay([]);
-              }
-            });
-          } else {
-            fetchMatches(undefined, selectedMapId).then((all) => {
-              if (all.matches.length > 0) {
-                setSelectedDay(all.matches[0].day);
-              }
-            });
-          }
-        }
       })
       .catch((e) => setError(e instanceof Error ? e.message : 'Failed to load matches'))
       .finally(() => setLoadingMatches(false));
-  }, [selectedMapId, selectedDay]);
+  }, [selectedMapId]);
+
+  useEffect(() => {
+    if (!selectedMapId || !matchesForMap.length) return;
+    const filtered = matchesForMap.filter((m) => m.day === selectedDay);
+    setMatches(filtered);
+    setSelectedMatchId('');
+  }, [selectedMapId, selectedDay, matchesForMap]);
 
   useEffect(() => {
     if (!selectedMatchId || !selectedMapId) {
@@ -134,6 +117,32 @@ export default function App() {
 
   const bounds = matchData?.bounds ?? null;
 
+  const overlayAvailability = (() => {
+    if (!matchData) return { traffic: false, kills: false, deaths: false };
+    let traffic = false;
+    let kills = false;
+    let deaths = false;
+    for (const p of matchData.players) {
+      if (p.positions.length > 0) traffic = true;
+      for (const ev of p.events) {
+        if (ev.event === 'Kill' || ev.event === 'BotKill') kills = true;
+        if (ev.event === 'Killed' || ev.event === 'BotKilled' || ev.event === 'KilledByStorm') deaths = true;
+      }
+      if (traffic && kills && deaths) break;
+    }
+    return { traffic, kills, deaths };
+  })();
+
+  useEffect(() => {
+    if (!matchData) return;
+    const ok =
+      heatmapKind === null ||
+      (heatmapKind === 'traffic' && overlayAvailability.traffic) ||
+      (heatmapKind === 'kills' && overlayAvailability.kills) ||
+      (heatmapKind === 'deaths' && overlayAvailability.deaths);
+    if (!ok) setHeatmapKind(null);
+  }, [matchData, heatmapKind, overlayAvailability.traffic, overlayAvailability.kills, overlayAvailability.deaths]);
+
   const tick = useCallback(() => {
     if (!bounds) return;
     const next = currentTimeMs + PLAYBACK_INTERVAL_MS * PLAYBACK_SPEED;
@@ -170,7 +179,7 @@ export default function App() {
           <p className="card__title">Choose match</p>
           <Filters
             maps={maps}
-            days={days}
+            days={selectedMapId ? getDaysForMap(matchesForMap) : []}
             matches={matches}
             selectedMapId={selectedMapId}
             selectedDay={selectedDay}
@@ -211,6 +220,7 @@ export default function App() {
               onHeatmapChange={setHeatmapKind}
               disabled={!matchData || loadingMatch}
               heatmapLoading={heatmapLoading}
+              availableOverlays={overlayAvailability}
             />
             {matchData && (
               <div className="match-summary">

@@ -96,6 +96,18 @@ export async function fetchMatches(day?: string, map_id?: string): Promise<{ mat
   return r.json();
 }
 
+/** Day order for sorting (February_10 … February_14). */
+const DAY_ORDER = ['February_10', 'February_11', 'February_12', 'February_13', 'February_14'];
+
+/** Returns unique days that have matches, sorted in calendar order. */
+export function getDaysForMap(matches: MatchInfo[]): string[] {
+  const set = new Set<string>();
+  for (const m of matches) {
+    if (m.day) set.add(String(m.day).trim());
+  }
+  return DAY_ORDER.filter((d) => set.has(d));
+}
+
 export async function fetchMatch(match_id: string, map_id: string): Promise<MatchData> {
   const key = `${map_id}:${match_id}`;
   const cached = matchCache.get(key);

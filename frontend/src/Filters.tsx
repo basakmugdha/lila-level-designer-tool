@@ -45,6 +45,7 @@ export function Filters({
         <select
           value={selectedDay}
           onChange={(e) => onDayChange(e.target.value)}
+          disabled={!selectedMapId || loadingMatches}
           aria-label="Select date"
         >
           <option value="">— Select day —</option>

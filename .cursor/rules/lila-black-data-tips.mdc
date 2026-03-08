@@ -1,0 +1,22 @@
+---
+description: LILA BLACK player event data — tips and conventions from README
+alwaysApply: true
+---
+
+# LILA BLACK Player Data — Project Tips
+
+This project contains **LILA BLACK** battle-royale gameplay data (Feb 10–14, 2026): Parquet files per player-per-match, ~89k event rows, 339 players, 796 matches, 3 maps (AmbroseValley, GrandRift, Lockdown). See `README.md` for full schema, event types, and map config.
+
+## Tips (from README — keep in mind when working with this data)
+
+- The **`event` column is stored as bytes** in parquet. Decode to get readable strings (e.g. `df['event'].apply(lambda x: x.decode('utf-8') if isinstance(x, bytes) else x)`).
+- Files **have no `.parquet` extension** — they are valid parquet (e.g. `*.nakama-0`). Pass the path directly to pandas, DuckDB, Polars, or Spark.
+- **February 14 is a partial day** (collection was still ongoing).
+- **Position events are the bulk of the data (~85%+)**. Filter them out if focusing on combat/loot events.
+- To **reconstruct a full match timeline**: gather all files with the same `match_id`, combine, and sort by `ts`.
+
+## Quick reference
+
+- **Humans**: `user_id` is a UUID; events include `Position`, `Kill`, `Killed`, `Loot`, `KilledByStorm`.
+- **Bots**: `user_id` is numeric; events include `BotPosition`, `BotKill`, `BotKilled`.
+- **Minimap plotting**: use `x` and `z` only (not `y` — that’s elevation). Use map scale/origin from README for world-to-pixel conversion.

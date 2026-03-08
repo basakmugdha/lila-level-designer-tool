@@ -99,10 +99,31 @@ export function MapView({
     ctx.setTransform(scale, 0, 0, scale, 0, 0);
     ctx.clearRect(0, 0, MINIMAP_SIZE, MINIMAP_SIZE);
 
-    // 1. Heatmap overlay (from pre-rendered layer)
+    // 1. Heatmap overlay (from pre-rendered layer or draw inline if not ready)
     const heatmapLayer = heatmapLayerRef.current;
     if (heatmapLayer) {
       ctx.drawImage(heatmapLayer, 0, 0, MINIMAP_SIZE, MINIMAP_SIZE);
+    } else if (heatmap?.grid) {
+      const g = heatmap.grid;
+      const cellW = MINIMAP_SIZE / heatmap.grid_size;
+      const cellH = MINIMAP_SIZE / heatmap.grid_size;
+      const maxVal = heatmap.max_val || 1;
+      for (let j = 0; j < heatmap.grid_size; j++) {
+        for (let i = 0; i < heatmap.grid_size; i++) {
+          const v = g[j][i] / maxVal;
+          if (v <= 0) continue;
+          let r = 0, g_ = 0, b = 0, a = 0.4 * v;
+          if (heatmap.kind === 'traffic') {
+            r = 0.2; g_ = 0.5; b = 1;
+          } else if (heatmap.kind === 'kills') {
+            r = 1; g_ = 0.2; b = 0.2;
+          } else {
+            r = 0.6; g_ = 0; b = 0.6;
+          }
+          ctx.fillStyle = `rgba(${r * 255},${g_ * 255},${b * 255},${a})`;
+          ctx.fillRect(i * cellW, j * cellH, cellW + 1, cellH + 1);
+        }
+      }
     }
 
     // 2. Paths up to current time

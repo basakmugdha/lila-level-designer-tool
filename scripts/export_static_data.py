@@ -2,8 +2,13 @@
 """
 Export parquet data to static JSON for GitHub Pages (no backend).
 Writes to frontend/public/data/: index.json, match/*.json, heatmap/*.json, minimaps.
+
 Usage (from repo root):
-  PLAYER_DATA_ROOT=. python scripts/export_static_data.py [--limit N]
+  PLAYER_DATA_ROOT=/path/to/player_data python scripts/export_static_data.py [--limit N]
+
+To get matches for all dates (Feb 10–14), ensure PLAYER_DATA_ROOT contains folders
+February_10, February_11, February_12, February_13, February_14 with parquet files.
+With --limit N, up to N//5 matches per (map, day) are exported so each date has options.
 """
 import argparse
 import json

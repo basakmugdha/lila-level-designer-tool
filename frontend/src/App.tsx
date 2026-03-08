@@ -35,6 +35,7 @@ export default function App() {
   const [loadingMatches, setLoadingMatches] = useState(false);
   const [loadingMatch, setLoadingMatch] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [hintMapsForDay, setHintMapsForDay] = useState<string[]>([]);
 
   useEffect(() => {
     Promise.all([fetchMaps(), fetchDays()])
@@ -50,15 +51,31 @@ export default function App() {
   useEffect(() => {
     if (!selectedMapId) {
       setMatches([]);
+      setHintMapsForDay([]);
       return;
     }
     setError(null);
     setLoadingMatches(true);
+    setHintMapsForDay([]);
     preloadMinimap(selectedMapId);
     fetchMatches(selectedDay || undefined, selectedMapId)
       .then((r) => {
         setMatches(r.matches);
         setSelectedMatchId('');
+        if (r.matches.length === 0 && selectedMapId) {
+          fetchMatches(undefined, selectedMapId).then((all) => {
+            if (all.matches.length > 0) {
+              const firstDayWithMatches = all.matches[0].day;
+              setSelectedDay(firstDayWithMatches);
+            }
+          });
+          if (selectedDay) {
+            fetchMatches(selectedDay, undefined).then((byDay) => {
+              const otherMaps = [...new Set(byDay.matches.map((m) => m.map_id).filter((id) => id !== selectedMapId))];
+              setHintMapsForDay(otherMaps);
+            });
+          }
+        }
       })
       .catch((e) => setError(e instanceof Error ? e.message : 'Failed to load matches'))
       .finally(() => setLoadingMatches(false));
@@ -148,11 +165,18 @@ export default function App() {
             onDayChange={(d) => { setSelectedDay(d); setError(null); }}
             onMatchChange={setSelectedMatchId}
             loadingMatches={loadingMatches}
+            hintMapsForDay={hintMapsForDay}
           />
         </div>
       </div>
 
       <div className="app__main">
+        <aside className="app__legend-column" aria-label="Map legend">
+          <div className="card">
+            <p className="card__title">Legend</p>
+            <Legend />
+          </div>
+        </aside>
         <div className="app__map-area">
           <div className={`map-view${loadingMatch && selectedMatchId ? ' map-view--loading' : ''}`}>
             <MapView
@@ -163,9 +187,6 @@ export default function App() {
               showOnlyHumanPaths={showOnlyHumanPaths}
               eventTypesShown={eventTypesShown}
             />
-          </div>
-          <div className="map-legend--floating" aria-label="Map legend">
-            <Legend />
           </div>
         </div>
         <aside className="app__sidebar">

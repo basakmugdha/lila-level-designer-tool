@@ -11,6 +11,7 @@ export function Filters({
   onDayChange,
   onMatchChange,
   loadingMatches,
+  hintMapsForDay = [],
 }: {
   maps: MapInfo[];
   days: string[];
@@ -22,6 +23,7 @@ export function Filters({
   onDayChange: (day: string) => void;
   onMatchChange: (matchId: string) => void;
   loadingMatches: boolean;
+  hintMapsForDay?: string[];
 }) {
   return (
     <div className="filters">
@@ -62,7 +64,9 @@ export function Filters({
         >
           <option value="">— Select match —</option>
           {!loadingMatches && selectedMapId && matches.length === 0 ? (
-            <option value="" disabled>— No matches for this date and map —</option>
+            <option value="" disabled>
+              — No matches for this date and map —
+            </option>
           ) : (
             matches.map((m) => (
               <option key={m.match_id} value={m.match_id}>
@@ -71,6 +75,11 @@ export function Filters({
             ))
           )}
         </select>
+        {!loadingMatches && selectedMapId && selectedDay && matches.length === 0 && hintMapsForDay.length > 0 && (
+          <span className="filter-group__hint">
+            Try <strong>{hintMapsForDay.join(', ')}</strong> for this date.
+          </span>
+        )}
       </label>
     </div>
   );

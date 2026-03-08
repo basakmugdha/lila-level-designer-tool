@@ -61,11 +61,15 @@ export function Filters({
           aria-busy={loadingMatches}
         >
           <option value="">— Select match —</option>
-          {matches.map((m) => (
-            <option key={m.match_id} value={m.match_id}>
-              {m.match_id.slice(0, 8)}… ({m.day})
-            </option>
-          ))}
+          {!loadingMatches && selectedMapId && matches.length === 0 ? (
+            <option value="" disabled>— No matches for this date and map —</option>
+          ) : (
+            matches.map((m) => (
+              <option key={m.match_id} value={m.match_id}>
+                {m.match_id.slice(0, 8)}… ({m.day})
+              </option>
+            ))
+          )}
         </select>
       </label>
     </div>

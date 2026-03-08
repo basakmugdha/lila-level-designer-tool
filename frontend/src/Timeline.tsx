@@ -14,11 +14,7 @@ export function Timeline({
   onPlayPause: () => void;
 }) {
   if (!bounds || bounds.ts_min_ms === bounds.ts_max_ms) {
-    return (
-      <div className="timeline">
-        <p className="timeline__hint">Select a match to enable playback.</p>
-      </div>
-    );
+    return null;
   }
 
   const min = bounds.ts_min_ms;
@@ -54,6 +50,7 @@ export function Timeline({
           onSeek(min + pct * range);
         }}
         className="timeline__slider"
+        aria-label="Scrub match timeline"
       />
     </div>
   );

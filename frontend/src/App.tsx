@@ -27,6 +27,7 @@ export default function App() {
   const [matchData, setMatchData] = useState<MatchData | null>(null);
   const [heatmapData, setHeatmapData] = useState<HeatmapData | null>(null);
   const [heatmapKind, setHeatmapKind] = useState<HeatmapKind>(null);
+  const [heatmapLoading, setHeatmapLoading] = useState(false);
   const [currentTimeMs, setCurrentTimeMs] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [showOnlyHumanPaths, setShowOnlyHumanPaths] = useState(false);
@@ -51,6 +52,7 @@ export default function App() {
       setMatches([]);
       return;
     }
+    setError(null);
     setLoadingMatches(true);
     fetchMatches(selectedDay || undefined, selectedMapId)
       .then((r) => {
@@ -88,11 +90,14 @@ export default function App() {
   useEffect(() => {
     if (!heatmapKind || !selectedMatchId || !selectedMapId) {
       setHeatmapData(null);
+      setHeatmapLoading(false);
       return;
     }
+    setHeatmapLoading(true);
     fetchHeatmap(selectedMatchId, selectedMapId, heatmapKind)
       .then(setHeatmapData)
-      .catch(() => setHeatmapData(null));
+      .catch(() => setHeatmapData(null))
+      .finally(() => setHeatmapLoading(false));
   }, [heatmapKind, selectedMatchId, selectedMapId]);
 
   const bounds = matchData?.bounds ?? null;
@@ -118,7 +123,8 @@ export default function App() {
     <div className="app">
       <header className="app__header">
         <h1><span className="app__brand">LILA BLACK</span> — Level Design Telemetry</h1>
-        <p className="app__subtitle">Explore player movement, combat, and storm deaths on the map. Pick a map, date, and match to view journeys and heatmaps.</p>
+        <p className="app__subtitle">Explore player movement, combat, and storm deaths on the map.</p>
+        <p className="app__instruction">Select a map, date, and match to view player journeys and enable playback.</p>
       </header>
 
       {error && (
@@ -137,39 +143,45 @@ export default function App() {
             selectedMapId={selectedMapId}
             selectedDay={selectedDay}
             selectedMatchId={selectedMatchId}
-            onMapChange={setSelectedMapId}
-            onDayChange={setSelectedDay}
+            onMapChange={(id) => { setSelectedMapId(id); setError(null); }}
+            onDayChange={(d) => { setSelectedDay(d); setError(null); }}
             onMatchChange={setSelectedMatchId}
             loadingMatches={loadingMatches}
           />
         </div>
-        <div className="card">
-          <p className="card__title">Overlays</p>
-          <HeatmapControls
-            heatmapKind={heatmapKind}
-            onHeatmapChange={setHeatmapKind}
-            disabled={!matchData || loadingMatch}
-          />
-          {matchData && (
-            <div className="match-summary">
-              <MatchSummary data={matchData} />
-            </div>
-          )}
-        </div>
       </div>
 
       <div className="app__main">
-        <div className={`map-view${loadingMatch && selectedMatchId ? ' map-view--loading' : ''}`}>
-          <MapView
-            matchData={matchData}
-            currentTimeMs={currentTimeMs}
-            heatmap={heatmapData}
-            minimapUrl={selectedMapId ? minimapUrl(selectedMapId) : ''}
-            showOnlyHumanPaths={showOnlyHumanPaths}
-            eventTypesShown={eventTypesShown}
-          />
+        <div className="app__map-area">
+          <div className={`map-view${loadingMatch && selectedMatchId ? ' map-view--loading' : ''}`}>
+            <MapView
+              matchData={matchData}
+              currentTimeMs={currentTimeMs}
+              heatmap={heatmapData}
+              minimapUrl={selectedMapId ? minimapUrl(selectedMapId) : ''}
+              showOnlyHumanPaths={showOnlyHumanPaths}
+              eventTypesShown={eventTypesShown}
+            />
+          </div>
+          <div className="map-legend--floating" aria-label="Map legend">
+            <Legend />
+          </div>
         </div>
         <aside className="app__sidebar">
+          <div className="card">
+            <p className="card__title">Overlays</p>
+            <HeatmapControls
+              heatmapKind={heatmapKind}
+              onHeatmapChange={setHeatmapKind}
+              disabled={!matchData || loadingMatch}
+              heatmapLoading={heatmapLoading}
+            />
+            {matchData && (
+              <div className="match-summary">
+                <MatchSummary data={matchData} />
+              </div>
+            )}
+          </div>
           <div className="card">
             <p className="card__title">Display options</p>
             <ViewOptions
@@ -179,10 +191,6 @@ export default function App() {
               onEventGroupsShownChange={setEventTypesShown}
               disabled={!matchData || loadingMatch}
             />
-          </div>
-          <div className="card">
-            <p className="card__title">Legend</p>
-            <Legend />
           </div>
         </aside>
       </div>

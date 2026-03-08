@@ -4,10 +4,12 @@ export function HeatmapControls({
   heatmapKind,
   onHeatmapChange,
   disabled,
+  heatmapLoading = false,
 }: {
   heatmapKind: HeatmapKind;
   onHeatmapChange: (kind: HeatmapKind) => void;
   disabled: boolean;
+  heatmapLoading?: boolean;
 }) {
   return (
     <div className="heatmap-controls">
@@ -54,6 +56,9 @@ export function HeatmapControls({
           Deaths
         </label>
       </div>
+      {heatmapLoading && heatmapKind && (
+        <span className="heatmap-controls__loading" aria-live="polite">Loading…</span>
+      )}
     </div>
   );
 }

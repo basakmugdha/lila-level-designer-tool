@@ -33,10 +33,13 @@ jobs:
         run: |
           cd frontend
           npm ci
-          npm run build
+          export VITE_USE_STATIC=true
+          npm run build:pages
         env:
           VITE_USE_STATIC: 'true'
-          VITE_BASE_URL: '/${{ github.event.repository.name }}/'
+
+      - name: Verify built index
+        run: head -18 frontend/dist/index.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

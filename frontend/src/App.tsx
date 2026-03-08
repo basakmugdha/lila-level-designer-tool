@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { fetchMaps, fetchDays, fetchMatches, fetchMatch, fetchHeatmap, minimapUrl } from './api';
+import { fetchMaps, fetchDays, fetchMatches, fetchMatch, fetchHeatmap, minimapUrl, preloadMinimap } from './api';
 import type { MatchData, HeatmapData } from './api';
 import { MapView } from './MapView';
 import { Filters } from './Filters';
@@ -54,6 +54,7 @@ export default function App() {
     }
     setError(null);
     setLoadingMatches(true);
+    preloadMinimap(selectedMapId);
     fetchMatches(selectedDay || undefined, selectedMapId)
       .then((r) => {
         setMatches(r.matches);

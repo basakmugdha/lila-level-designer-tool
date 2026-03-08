@@ -29,7 +29,42 @@ export function MapView({
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const heatmapLayerRef = useRef<HTMLCanvasElement | null>(null);
   const [displaySize, setDisplaySize] = useState(480);
+
+  // Pre-render heatmap to offscreen canvas so we only run the grid loop when heatmap changes
+  useEffect(() => {
+    if (!heatmap?.grid) {
+      heatmapLayerRef.current = null;
+      return;
+    }
+    const off = document.createElement('canvas');
+    off.width = MINIMAP_SIZE;
+    off.height = MINIMAP_SIZE;
+    const ctx = off.getContext('2d');
+    if (!ctx) return;
+    const g = heatmap.grid;
+    const cellW = MINIMAP_SIZE / heatmap.grid_size;
+    const cellH = MINIMAP_SIZE / heatmap.grid_size;
+    const maxVal = heatmap.max_val || 1;
+    for (let j = 0; j < heatmap.grid_size; j++) {
+      for (let i = 0; i < heatmap.grid_size; i++) {
+        const v = g[j][i] / maxVal;
+        if (v <= 0) continue;
+        let r = 0, g_ = 0, b = 0, a = 0.4 * v;
+        if (heatmap.kind === 'traffic') {
+          r = 0.2; g_ = 0.5; b = 1;
+        } else if (heatmap.kind === 'kills') {
+          r = 1; g_ = 0.2; b = 0.2;
+        } else {
+          r = 0.6; g_ = 0; b = 0.6;
+        }
+        ctx.fillStyle = `rgba(${r * 255},${g_ * 255},${b * 255},${a})`;
+        ctx.fillRect(i * cellW, j * cellH, cellW + 1, cellH + 1);
+      }
+    }
+    heatmapLayerRef.current = off;
+  }, [heatmap]);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -64,28 +99,10 @@ export function MapView({
     ctx.setTransform(scale, 0, 0, scale, 0, 0);
     ctx.clearRect(0, 0, MINIMAP_SIZE, MINIMAP_SIZE);
 
-    // 1. Heatmap overlay (below paths)
-    if (heatmap && heatmap.grid) {
-      const g = heatmap.grid;
-      const cellW = MINIMAP_SIZE / heatmap.grid_size;
-      const cellH = MINIMAP_SIZE / heatmap.grid_size;
-      const maxVal = heatmap.max_val || 1;
-      for (let j = 0; j < heatmap.grid_size; j++) {
-        for (let i = 0; i < heatmap.grid_size; i++) {
-          const v = g[j][i] / maxVal;
-          if (v <= 0) continue;
-          let r = 0, g_ = 0, b = 0, a = 0.4 * v;
-          if (heatmap.kind === 'traffic') {
-            r = 0.2; g_ = 0.5; b = 1;
-          } else if (heatmap.kind === 'kills') {
-            r = 1; g_ = 0.2; b = 0.2;
-          } else {
-            r = 0.6; g_ = 0; b = 0.6;
-          }
-          ctx.fillStyle = `rgba(${r * 255},${g_ * 255},${b * 255},${a})`;
-          ctx.fillRect(i * cellW, j * cellH, cellW + 1, cellH + 1);
-        }
-      }
+    // 1. Heatmap overlay (from pre-rendered layer)
+    const heatmapLayer = heatmapLayerRef.current;
+    if (heatmapLayer) {
+      ctx.drawImage(heatmapLayer, 0, 0, MINIMAP_SIZE, MINIMAP_SIZE);
     }
 
     // 2. Paths up to current time

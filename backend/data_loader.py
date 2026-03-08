@@ -50,6 +50,26 @@ def _decode_event(val) -> str:
     return str(val)
 
 
+def _downsample_positions(positions: list[dict], interval_ms: int = 200, max_points: int = 2000) -> list[dict]:
+    """Keep at most one point per interval_ms, cap at max_points. Preserves first and last."""
+    if len(positions) <= max_points:
+        return positions
+    if len(positions) <= 2:
+        return positions
+    result = [positions[0]]
+    last_ts = positions[0]["ts_ms"]
+    for i in range(1, len(positions) - 1):
+        if len(result) >= max_points:
+            break
+        pt = positions[i]
+        if pt["ts_ms"] - last_ts >= interval_ms:
+            result.append(pt)
+            last_ts = pt["ts_ms"]
+    if len(positions) > 1 and (not result or result[-1] is not positions[-1]):
+        result.append(positions[-1])
+    return result
+
+
 def _parse_filename(name: str) -> tuple[str, str] | None:
     """Return (user_id, match_id) from filename 'user_id_match_id.nakama-0'."""
     if not name.endswith(".nakama-0"):
@@ -97,14 +117,15 @@ def list_matches(day: str | None = None, map_id: str | None = None) -> list[dict
     return list(seen.values())
 
 
-def load_match(match_id: str, map_id: str) -> dict | None:
+def load_match(match_id: str, map_id: str, downsample: bool = True) -> dict | None:
     """
     Load all player journeys for a match. Returns payload for frontend:
     {
       match_id, map_id,
-      players: [ { user_id, is_bot, positions: [{ts_ms, px, py, event}], events: [{ts_ms, px, py, event}] } ],
+      players: [ { user_id, is_bot, positions: [{ts_ms, px, py, event}], events: [...] } ],
       bounds: { ts_min_ms, ts_max_ms }
     }
+    If downsample=True (default), positions are downsampled for faster load; use downsample=False for heatmaps.
     """
     cfg = MAP_CONFIG.get(map_id)
     if not cfg:
@@ -164,6 +185,8 @@ def load_match(match_id: str, map_id: str) -> dict | None:
                     events.append(rec)
 
             positions.sort(key=lambda r: r["ts_ms"])
+            if downsample:
+                positions = _downsample_positions(positions, interval_ms=200, max_points=2000)
             events.sort(key=lambda r: r["ts_ms"])
             players.append({
                 "user_id": user_id,
@@ -187,7 +210,7 @@ def build_heatmap(match_id: str, map_id: str, kind: str) -> dict | None:
     kind: 'traffic' | 'kills' | 'deaths'
     Returns grid counts for 1024x1024 (or downsampled) for overlay.
     """
-    data = load_match(match_id, map_id)
+    data = load_match(match_id, map_id, downsample=False)
     if not data:
         return None
     # Use 64x64 grid for smaller payload and smoother heatmap

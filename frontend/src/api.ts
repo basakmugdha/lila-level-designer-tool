@@ -31,6 +31,9 @@ function getStaticIndex(): Promise<StaticIndex> {
   return staticIndexPromise;
 }
 
+const matchCache = new Map<string, MatchData>();
+const MATCH_CACHE_MAX = 20;
+
 export type MapInfo = { id: string; minimap_url: string };
 export type MatchInfo = { match_id: string; day: string; map_id: string };
 
@@ -94,25 +97,47 @@ export async function fetchMatches(day?: string, map_id?: string): Promise<{ mat
 }
 
 export async function fetchMatch(match_id: string, map_id: string): Promise<MatchData> {
+  const key = `${map_id}:${match_id}`;
+  const cached = matchCache.get(key);
+  if (cached) return cached;
+
+  let data: MatchData;
   if (USE_STATIC) {
     const r = await fetch(dataUrl(`match/${map_id}/${safeMatchId(match_id)}.json`));
     if (!r.ok) throw new Error('Match not found');
-    return r.json();
+    data = await r.json();
+  } else {
+    const r = await fetch(`/api/match/${encodeURIComponent(match_id)}?map_id=${encodeURIComponent(map_id)}`);
+    if (!r.ok) throw new Error('Match not found');
+    data = await r.json();
   }
-  const r = await fetch(`/api/match/${encodeURIComponent(match_id)}?map_id=${encodeURIComponent(map_id)}`);
-  if (!r.ok) throw new Error('Match not found');
-  return r.json();
+  matchCache.set(key, data);
+  if (matchCache.size > MATCH_CACHE_MAX) {
+    const first = matchCache.keys().next().value;
+    if (first) matchCache.delete(first);
+  }
+  return data;
 }
 
+const heatmapCache = new Map<string, HeatmapData>();
+
 export async function fetchHeatmap(match_id: string, map_id: string, kind: 'traffic' | 'kills' | 'deaths'): Promise<HeatmapData> {
+  const key = `${map_id}:${match_id}:${kind}`;
+  const cached = heatmapCache.get(key);
+  if (cached) return cached;
+
+  let data: HeatmapData;
   if (USE_STATIC) {
     const r = await fetch(dataUrl(`heatmap/${map_id}/${safeMatchId(match_id)}/${kind}.json`));
     if (!r.ok) throw new Error('Heatmap failed');
-    return r.json();
+    data = await r.json();
+  } else {
+    const r = await fetch(`/api/heatmap/${encodeURIComponent(match_id)}?map_id=${encodeURIComponent(map_id)}&kind=${kind}`);
+    if (!r.ok) throw new Error('Heatmap failed');
+    data = await r.json();
   }
-  const r = await fetch(`/api/heatmap/${encodeURIComponent(match_id)}?map_id=${encodeURIComponent(map_id)}&kind=${kind}`);
-  if (!r.ok) throw new Error('Heatmap failed');
-  return r.json();
+  heatmapCache.set(key, data);
+  return data;
 }
 
 export function minimapUrl(mapId: string): string {
@@ -121,4 +146,12 @@ export function minimapUrl(mapId: string): string {
     return dataUrl(`minimaps/${mapId}${ext}`);
   }
   return `/api/minimaps/${mapId}`;
+}
+
+/** Preload minimap image so it's ready when a match is selected. Call when map changes. */
+export function preloadMinimap(mapId: string): void {
+  if (!mapId) return;
+  const url = minimapUrl(mapId);
+  const img = new Image();
+  img.src = url;
 }

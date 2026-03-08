@@ -2,8 +2,8 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
-// GitHub Pages: build:pages uses --base=./ so assets load from repo path
-const base = process.env.VITE_BASE_URL ?? '/';
+// GitHub Pages: use relative base so assets load at /repo-name/assets/...
+const base = process.env.VITE_BASE_URL || (process.env.NODE_ENV === 'production' ? './' : '/');
 export default defineConfig({
   plugins: [react()],
   base,

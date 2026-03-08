@@ -7,14 +7,24 @@
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
     <title>LILA BLACK — Level Design Telemetry</title>
-    <!-- Fallback so page is never unstyled if chunk fails to load -->
+    <!-- Critical CSS: layout and map-first UI so production shows correctly even if chunk loads late -->
     <style>
-      body { margin: 0; background: #0f0f14; color: #c0caf5; font-family: system-ui, sans-serif; min-height: 100vh; }
-      #root { max-width: 1400px; margin: 0 auto; padding: 1rem 1.5rem; min-height: 100vh; display: flex; flex-direction: column; }
-      #root .app { display: flex; flex-direction: column; flex: 1; min-height: 0; }
-      #root .app__main { flex: 1; min-height: 0; display: flex; gap: 1rem; margin-bottom: 1rem; }
-      #root .app__map-area { flex: 1; min-width: 0; min-height: 55vh; position: relative; }
-      #root .app__sidebar { flex: 0 0 260px; }
+      :root{--bg-base:#0f0f14;--bg-card:#1a1b26;--border:#2a2b3a;--text:#c0caf5;--text-muted:#565f89;--accent:#7aa2f7;--radius:10px;--shadow:0 4px 20px rgba(0,0,0,.35)}
+      *{box-sizing:border-box}
+      body{margin:0;background:var(--bg-base);color:var(--text);font-family:'DM Sans',system-ui,sans-serif;min-height:100vh;line-height:1.5}
+      #root{max-width:1400px;margin:0 auto;padding:1rem 1.5rem;min-height:100vh;display:flex;flex-direction:column}
+      #root .app{display:flex;flex-direction:column;flex:1;min-height:0}
+      #root .app__header{margin-bottom:.75rem;padding-bottom:.75rem;border-bottom:1px solid var(--border);flex-shrink:0}
+      #root .app__header h1{margin:0 0 .2rem;font-size:1.35rem;font-weight:700;color:var(--text)}
+      #root .app__instruction{margin:.2rem 0 0;font-size:.8rem;color:var(--text-muted)}
+      #root .app__controls{margin-bottom:.75rem;flex-shrink:0}
+      #root .app__main{flex:1;min-height:0;display:flex;gap:1rem;margin-bottom:1rem}
+      #root .app__map-area{flex:1 1 78%;min-width:0;min-height:55vh;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center}
+      #root .app__sidebar{flex:0 0 260px;display:flex;flex-direction:column;gap:.75rem}
+      #root .card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:.75rem 1rem;box-shadow:var(--shadow)}
+      #root .card__title{margin:0 0 .5rem;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted)}
+      #root .map-view{width:100%;height:100%;min-height:360px;position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+      #root .map-legend--floating{position:absolute;bottom:12px;left:12px;right:12px;max-width:420px;background:rgba(26,27,38,.92);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:6px;padding:.6rem 1rem;display:flex;flex-wrap:wrap;align-items:center;gap:.75rem 1.25rem;box-shadow:var(--shadow)}
     </style>
     <link rel="icon" type="image/svg+xml" href="./vite.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />

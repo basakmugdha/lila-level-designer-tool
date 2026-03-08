@@ -40,13 +40,19 @@ jobs:
           VITE_USE_STATIC: 'true'
           VITE_BASE_URL: './'
 
-      - name: Verify built index (relative asset paths)
+      - name: Verify built index (relative asset paths required)
         run: |
-          echo "=== Built index.html (first 25 lines) ==="
-          head -25 frontend/dist/index.html
+          echo "=== Built index.html (first 30 lines) ==="
+          head -30 frontend/dist/index.html
           echo ""
-          echo "=== Checking asset paths are relative ==="
-          grep -E 'href="\./|src="\./' frontend/dist/index.html || true
+          if ! grep -q 'src="\./assets/' frontend/dist/index.html; then
+            echo "ERROR: Built index.html must reference script with src=\"./assets/...\""
+            exit 1
+          fi
+          if ! grep -q 'href="\./assets/' frontend/dist/index.html; then
+            echo "WARN: No CSS link with href=\"./assets/\" (may be inlined)"
+          fi
+          echo "OK: Relative asset paths found"
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

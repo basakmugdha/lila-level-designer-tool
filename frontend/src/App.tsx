@@ -172,8 +172,8 @@ export default function App() {
 
       <div className="app__main">
         <aside className="app__legend-column" aria-label="Map legend">
-          <div className="card">
-            <p className="card__title">Legend</p>
+          <div className="legend-column__inner">
+            <span className="legend-column__title">Legend</span>
             <Legend />
           </div>
         </aside>

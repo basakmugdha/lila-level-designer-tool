@@ -7,9 +7,9 @@
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
     <title>LILA BLACK — Level Design Telemetry</title>
-    <!-- Critical CSS: layout and map-first UI so production shows correctly even if chunk loads late -->
+    <!-- Critical CSS: map-centered layout + left legend column (no card). Loads first so production shows correctly. -->
     <style>
-      :root{--bg-base:#0f0f14;--bg-card:#1a1b26;--border:#2a2b3a;--text:#c0caf5;--text-muted:#565f89;--accent:#7aa2f7;--radius:10px;--shadow:0 4px 20px rgba(0,0,0,.35)}
+      :root{--bg-base:#0f0f14;--bg-card:#1a1b26;--border:#2a2b3a;--text:#c0caf5;--text-muted:#565f89;--text-strong:#a9b1d6;--accent:#7aa2f7;--radius:10px;--shadow:0 4px 20px rgba(0,0,0,.35)}
       *{box-sizing:border-box}
       body{margin:0;background:var(--bg-base);color:var(--text);font-family:'DM Sans',system-ui,sans-serif;min-height:100vh;line-height:1.5}
       #root{max-width:1400px;margin:0 auto;padding:1rem 1.5rem;min-height:100vh;display:flex;flex-direction:column}
@@ -18,9 +18,11 @@
       #root .app__header h1{margin:0 0 .2rem;font-size:1.35rem;font-weight:700;color:var(--text)}
       #root .app__instruction{margin:.2rem 0 0;font-size:.8rem;color:var(--text-muted)}
       #root .app__controls{margin-bottom:.75rem;flex-shrink:0}
-      #root .app__main{flex:1;min-height:0;display:flex;gap:1rem;margin-bottom:1rem}
-      #root .app__legend-column{flex:0 0 200px;display:flex;flex-direction:column;min-width:0}
-      #root .app__map-area{flex:1 1 60%;min-width:0;min-height:55vh;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center}
+      #root .app__main{flex:1;min-height:0;display:flex;gap:1rem;margin-bottom:1rem;align-items:stretch}
+      #root .app__legend-column{flex:0 0 180px;min-width:0;display:flex;flex-direction:column;padding-top:.25rem}
+      #root .legend-column__inner{display:flex;flex-direction:column;gap:.75rem;padding:.75rem .5rem;font-size:.85rem;color:var(--text-strong);border-right:1px solid var(--border)}
+      #root .legend-column__title{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted)}
+      #root .app__map-area{flex:1 1 70%;min-width:0;min-height:60vh;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center}
       #root .app__sidebar{flex:0 0 260px;display:flex;flex-direction:column;gap:.75rem;position:relative;z-index:1}
       #root .card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:.75rem 1rem;box-shadow:var(--shadow)}
       #root .card__title{margin:0 0 .5rem;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted)}

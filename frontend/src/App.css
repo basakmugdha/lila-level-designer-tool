@@ -311,26 +311,36 @@ body {
 }
 
 .app__legend-column {
-  flex: 0 0 200px;
+  flex: 0 0 180px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   min-width: 0;
+  padding-top: 0.25rem;
 }
 
-.app__legend-column .card {
-  padding: 0.75rem 1rem;
+.legend-column__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.75rem 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text-strong);
+  border-right: 1px solid var(--border);
 }
 
-.app__legend-column .card__title {
-  margin: 0 0 0.5rem;
+.legend-column__title {
   font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
 }
 
 .app__map-area {
-  flex: 1 1 60%;
+  flex: 1 1 70%;
   min-width: 0;
-  min-height: 55vh;
+  min-height: 60vh;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -402,7 +412,7 @@ body {
 }
 
 .map-view__minimap {
-  --map-size: min(720px, min(100% - 24px, 65vh - 60px));
+  --map-size: min(800px, min(100% - 24px, 70vh - 40px));
   width: var(--map-size);
   height: var(--map-size);
   max-width: 100%;

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { fetchMaps, fetchMatches, fetchMatch, fetchHeatmap, minimapUrl, preloadMinimap, getDaysForMap, prefetchMatch } from './api';
-import type { MatchData, HeatmapData } from './api';
+import type { MatchData, HeatmapData, MatchInfo } from './api';
 import { MapView } from './MapView';
 import { Filters, type MatchFilterKind } from './Filters';
 import { Timeline } from './Timeline';
@@ -19,8 +19,8 @@ const DEFAULT_EVENT_TYPES: EventTypeFilter = new Set([
 
 export default function App() {
   const [maps, setMaps] = useState<{ id: string; minimap_url: string }[]>([]);
-  const [matchesForMap, setMatchesForMap] = useState<{ match_id: string; day: string; map_id: string }[]>([]);
-  const [matches, setMatches] = useState<{ match_id: string; day: string; map_id: string }[]>([]);
+  const [matchesForMap, setMatchesForMap] = useState<MatchInfo[]>([]);
+  const [matches, setMatches] = useState<MatchInfo[]>([]);
   const [selectedMapId, setSelectedMapId] = useState('');
   const [selectedDay, setSelectedDay] = useState('');
   const [selectedMatchId, setSelectedMatchId] = useState('');
@@ -91,7 +91,7 @@ export default function App() {
   useEffect(() => {
     if (matchFilter === 'default' || matches.length === 0) return;
     const key = matchFilter === 'maxKills' ? 'kills' : matchFilter === 'maxLoots' ? 'loots' : 'storm_deaths';
-    const sorted = [...matches].sort((a, b) => ((b as Record<string, number>)[key] ?? 0) - ((a as Record<string, number>)[key] ?? 0));
+    const sorted = [...matches].sort((a, b) => (b[key] ?? 0) - (a[key] ?? 0));
     setSelectedMatchId(sorted[0].match_id);
   }, [matchFilter, matches]);
 

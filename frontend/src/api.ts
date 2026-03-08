@@ -70,16 +70,6 @@ export async function fetchMaps(): Promise<{ maps: MapInfo[] }> {
   return r.json();
 }
 
-export async function fetchDays(): Promise<{ days: string[] }> {
-  if (USE_STATIC) {
-    const idx = await getStaticIndex();
-    return { days: idx.days };
-  }
-  const r = await fetch('/api/days');
-  if (!r.ok) throw new Error('Failed to fetch days');
-  return r.json();
-}
-
 export async function fetchMatches(day?: string, map_id?: string, includeStats?: boolean): Promise<{ matches: MatchInfo[] }> {
   if (USE_STATIC) {
     const idx = await getStaticIndex();

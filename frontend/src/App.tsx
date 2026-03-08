@@ -63,16 +63,30 @@ export default function App() {
         setMatches(r.matches);
         setSelectedMatchId('');
         if (r.matches.length === 0 && selectedMapId) {
-          fetchMatches(undefined, selectedMapId).then((all) => {
-            if (all.matches.length > 0) {
-              const firstDayWithMatches = all.matches[0].day;
-              setSelectedDay(firstDayWithMatches);
-            }
-          });
           if (selectedDay) {
+            // This date has no matches for current map. Prefer switching map to one that has this date.
             fetchMatches(selectedDay, undefined).then((byDay) => {
-              const otherMaps = [...new Set(byDay.matches.map((m) => m.map_id).filter((id) => id !== selectedMapId))];
-              setHintMapsForDay(otherMaps);
+              if (byDay.matches.length > 0) {
+                const firstMapWithDay = byDay.matches[0].map_id;
+                setSelectedMapId(firstMapWithDay);
+                setHintMapsForDay(
+                  [...new Set(byDay.matches.map((m) => m.map_id))].filter((id) => id !== firstMapWithDay)
+                );
+              } else {
+                // No matches for this date on any map; fall back to switching day to current map's first available day.
+                fetchMatches(undefined, selectedMapId).then((all) => {
+                  if (all.matches.length > 0) {
+                    setSelectedDay(all.matches[0].day);
+                  }
+                });
+                setHintMapsForDay([]);
+              }
+            });
+          } else {
+            fetchMatches(undefined, selectedMapId).then((all) => {
+              if (all.matches.length > 0) {
+                setSelectedDay(all.matches[0].day);
+              }
             });
           }
         }

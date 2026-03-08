@@ -8,6 +8,7 @@ import { HeatmapControls, type HeatmapKind } from './HeatmapControls';
 import { Legend } from './Legend';
 import { MatchSummary } from './MatchSummary';
 import { ViewOptions, type EventTypeFilter } from './ViewOptions';
+import './App.css';
 
 const PLAYBACK_INTERVAL_MS = 100;
 const PLAYBACK_SPEED = 0.5; // fraction of real time

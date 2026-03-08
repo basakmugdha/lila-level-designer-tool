@@ -5,7 +5,7 @@ from pathlib import Path
 import pandas as pd
 import pyarrow.parquet as pq
 
-from map_config import MAP_CONFIG, world_to_pixel
+from map_config import MAP_CONFIG, MINIMAP_SIZE
 
 # Default data root: repo/player_data if it exists, else parent of backend folder
 _repo_root = Path(__file__).resolve().parent.parent
@@ -14,6 +14,21 @@ DATA_ROOT = Path(
     os.environ.get("PLAYER_DATA_ROOT", _player_data if _player_data.is_dir() else _repo_root)
 )
 DAYS = ["February_10", "February_11", "February_12", "February_13", "February_14"]
+
+
+def _world_to_pixel_series(df: pd.DataFrame, map_id: str) -> tuple[pd.Series, pd.Series]:
+    """Vectorized world-to-pixel for a dataframe with x, z columns. Returns (px, py) series."""
+    cfg = MAP_CONFIG.get(map_id)
+    if not cfg:
+        return pd.Series(dtype=int), pd.Series(dtype=int)
+    scale = cfg["scale"]
+    ox = cfg["origin_x"]
+    oz = cfg["origin_z"]
+    u = (df["x"].astype(float) - ox) / scale
+    v = (df["z"].astype(float) - oz) / scale
+    px = (u * MINIMAP_SIZE).astype(int).clip(0, MINIMAP_SIZE - 1)
+    py = ((1 - v) * MINIMAP_SIZE).astype(int).clip(0, MINIMAP_SIZE - 1)
+    return px, py
 
 
 def _normalize_map_id(raw: str) -> str | None:
@@ -50,7 +65,7 @@ def _decode_event(val) -> str:
     return str(val)
 
 
-def _downsample_positions(positions: list[dict], interval_ms: int = 200, max_points: int = 2000) -> list[dict]:
+def _downsample_positions(positions: list[dict], interval_ms: int = 300, max_points: int = 1200) -> list[dict]:
     """Keep at most one point per interval_ms, cap at max_points. Preserves first and last."""
     if len(positions) <= max_points:
         return positions
@@ -86,7 +101,47 @@ def list_days() -> list[str]:
     return list(DAYS)
 
 
-def list_matches(day: str | None = None, map_id: str | None = None) -> list[dict]:
+    return list(seen.values())
+
+
+def get_match_stats(match_id: str, map_id: str) -> dict | None:
+    """Return { kills, loots, storm_deaths } for a match by reading only event column. Returns None if match not found."""
+    kills = loots = storm_deaths = 0
+    found = False
+    required_cols = ["event", "map_id"]
+    for d in list_days():
+        folder = DATA_ROOT / d
+        if not folder.is_dir():
+            continue
+        for f in folder.iterdir():
+            if not f.name.endswith(".nakama-0"):
+                continue
+            parsed = _parse_filename(f.name)
+            if not parsed or parsed[1] != match_id:
+                continue
+            found = True
+            try:
+                table = pq.read_table(f, columns=required_cols)
+                df = table.to_pandas()
+            except Exception:
+                continue
+            if df.empty or "map_id" not in df.columns:
+                continue
+            file_map = _normalize_map_id(df["map_id"].iloc[0])
+            if file_map is None or file_map != map_id:
+                continue
+            df["event"] = df["event"].apply(_decode_event)
+            for ev in df["event"]:
+                if ev in ("Kill", "BotKill"):
+                    kills += 1
+                elif ev == "Loot":
+                    loots += 1
+                elif ev == "KilledByStorm":
+                    storm_deaths += 1
+    return {"kills": kills, "loots": loots, "storm_deaths": storm_deaths} if found else None
+
+
+def list_matches(day: str | None = None, map_id: str | None = None, include_stats: bool = False) -> list[dict]:
     """List unique matches. Each entry: { match_id, day, map_id } (map_id from first file)."""
     seen = {}
     days = [day] if day else list_days()
@@ -104,7 +159,7 @@ def list_matches(day: str | None = None, map_id: str | None = None) -> list[dict
             if mid in seen:
                 continue
             try:
-                table = pq.read_table(f)
+                table = pq.read_table(f, columns=["map_id"])
                 df = table.to_pandas()
                 if df.empty or "map_id" not in df.columns:
                     continue
@@ -114,7 +169,15 @@ def list_matches(day: str | None = None, map_id: str | None = None) -> list[dict
                 seen[mid] = {"match_id": mid, "day": d, "map_id": row_map}
             except Exception:
                 continue
-    return list(seen.values())
+    result = list(seen.values())
+    if include_stats:
+        for m in result:
+            stats = get_match_stats(m["match_id"], m["map_id"])
+            if stats:
+                m["kills"] = stats["kills"]
+                m["loots"] = stats["loots"]
+                m["storm_deaths"] = stats["storm_deaths"]
+    return result
 
 
 def load_match(match_id: str, map_id: str, downsample: bool = True) -> dict | None:
@@ -131,9 +194,10 @@ def load_match(match_id: str, map_id: str, downsample: bool = True) -> dict | No
     if not cfg:
         return None
 
-    # Find all files for this match across days
+    position_events = {"Position", "BotPosition"}
     players = []
     ts_min, ts_max = None, None
+    required_cols = ["x", "z", "ts", "event", "map_id"]
 
     for d in list_days():
         folder = DATA_ROOT / d
@@ -147,7 +211,7 @@ def load_match(match_id: str, map_id: str, downsample: bool = True) -> dict | No
                 continue
             user_id = parsed[0]
             try:
-                table = pq.read_table(f)
+                table = pq.read_table(f, columns=required_cols)
                 df = table.to_pandas()
             except Exception:
                 continue
@@ -159,35 +223,31 @@ def load_match(match_id: str, map_id: str, downsample: bool = True) -> dict | No
 
             df["event"] = df["event"].apply(_decode_event)
             df["ts_ms"] = _ts_to_ms(df["ts"])
+            px_ser, py_ser = _world_to_pixel_series(df, map_id)
+            df["px"] = px_ser
+            df["py"] = py_ser
+
             if ts_min is None:
-                ts_min = df["ts_ms"].min()
-                ts_max = df["ts_ms"].max()
+                ts_min = int(df["ts_ms"].min())
+                ts_max = int(df["ts_ms"].max())
             else:
-                ts_min = min(ts_min, df["ts_ms"].min())
-                ts_max = max(ts_max, df["ts_ms"].max())
+                ts_min = min(ts_min, int(df["ts_ms"].min()))
+                ts_max = max(ts_max, int(df["ts_ms"].max()))
 
-            positions = []
-            events = []
-            position_events = {"Position", "BotPosition"}
-            for _, row in df.iterrows():
-                try:
-                    x, z = float(row["x"]), float(row["z"])
-                except (TypeError, ValueError):
-                    continue
-                pt = world_to_pixel(x, z, map_id)
-                if pt is None:
-                    continue
-                px, py = pt
-                rec = {"ts_ms": int(row["ts_ms"]), "px": px, "py": py, "event": row["event"]}
-                if row["event"] in position_events:
-                    positions.append(rec)
-                else:
-                    events.append(rec)
+            pos_mask = df["event"].isin(position_events)
+            positions_df = df.loc[pos_mask, ["ts_ms", "px", "py", "event"]].sort_values("ts_ms")
+            events_df = df.loc[~pos_mask, ["ts_ms", "px", "py", "event"]]
 
-            positions.sort(key=lambda r: r["ts_ms"])
+            positions = [
+                {"ts_ms": int(r["ts_ms"]), "px": int(r["px"]), "py": int(r["py"]), "event": r["event"]}
+                for r in positions_df.to_dict("records")
+            ]
+            events = [
+                {"ts_ms": int(r["ts_ms"]), "px": int(r["px"]), "py": int(r["py"]), "event": r["event"]}
+                for r in events_df.to_dict("records")
+            ]
             if downsample:
-                positions = _downsample_positions(positions, interval_ms=200, max_points=2000)
-            events.sort(key=lambda r: r["ts_ms"])
+                positions = _downsample_positions(positions, interval_ms=300, max_points=1200)
             players.append({
                 "user_id": user_id,
                 "is_bot": _is_bot(user_id),
@@ -201,7 +261,7 @@ def load_match(match_id: str, map_id: str, downsample: bool = True) -> dict | No
         "match_id": match_id,
         "map_id": map_id,
         "players": players,
-        "bounds": {"ts_min_ms": int(ts_min), "ts_max_ms": int(ts_max)},
+        "bounds": {"ts_min_ms": ts_min, "ts_max_ms": ts_max},
     }
 
 

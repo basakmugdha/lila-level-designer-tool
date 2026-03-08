@@ -32,10 +32,10 @@ function getStaticIndex(): Promise<StaticIndex> {
 }
 
 const matchCache = new Map<string, MatchData>();
-const MATCH_CACHE_MAX = 20;
+const MATCH_CACHE_MAX = 40;
 
 export type MapInfo = { id: string; minimap_url: string };
-export type MatchInfo = { match_id: string; day: string; map_id: string };
+export type MatchInfo = { match_id: string; day: string; map_id: string; kills?: number; loots?: number; storm_deaths?: number };
 
 export type PositionPoint = { ts_ms: number; px: number; py: number; event: string };
 export type PlayerJourney = {
@@ -80,7 +80,7 @@ export async function fetchDays(): Promise<{ days: string[] }> {
   return r.json();
 }
 
-export async function fetchMatches(day?: string, map_id?: string): Promise<{ matches: MatchInfo[] }> {
+export async function fetchMatches(day?: string, map_id?: string, includeStats?: boolean): Promise<{ matches: MatchInfo[] }> {
   if (USE_STATIC) {
     const idx = await getStaticIndex();
     let list = idx.matches;
@@ -91,6 +91,7 @@ export async function fetchMatches(day?: string, map_id?: string): Promise<{ mat
   const params = new URLSearchParams();
   if (day) params.set('day', day);
   if (map_id) params.set('map_id', map_id);
+  if (includeStats) params.set('include_stats', '1');
   const r = await fetch(`/api/matches?${params}`);
   if (!r.ok) throw new Error('Failed to fetch matches');
   return r.json();
@@ -129,6 +130,13 @@ export async function fetchMatch(match_id: string, map_id: string): Promise<Matc
     if (first) matchCache.delete(first);
   }
   return data;
+}
+
+/** Prefetch a match into cache so it loads instantly when selected. Call when match list is shown. */
+export function prefetchMatch(match_id: string, map_id: string): void {
+  const key = `${map_id}:${match_id}`;
+  if (matchCache.has(key)) return;
+  fetchMatch(match_id, map_id).catch(() => {});
 }
 
 const heatmapCache = new Map<string, HeatmapData>();

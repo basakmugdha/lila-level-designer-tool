@@ -71,15 +71,17 @@ def main():
                 by_map_day[k].append(m)
         matches = [m for lst in by_map_day.values() for m in lst]
 
-    index = {"days": days, "maps": maps_list, "matches": matches}
-    (OUT_DIR / "index.json").write_text(json.dumps(index, indent=0), encoding="utf-8")
-    print(f"Wrote index.json: {len(days)} days, {len(maps_list)} maps, {len(matches)} matches")
-
     for i, m in enumerate(matches):
         match_id, map_id = m["match_id"], m["map_id"]
         data = load_match(match_id, map_id)
         if not data:
             continue
+        kills = sum(1 for p in data["players"] for e in p["events"] if e.get("event") in ("Kill", "BotKill"))
+        loots = sum(1 for p in data["players"] for e in p["events"] if e.get("event") == "Loot")
+        storm_deaths = sum(1 for p in data["players"] for e in p["events"] if e.get("event") == "KilledByStorm")
+        m["kills"] = kills
+        m["loots"] = loots
+        m["storm_deaths"] = storm_deaths
         safe = safe_match_id(match_id)
         match_dir = OUT_DIR / "match" / map_id
         match_dir.mkdir(parents=True, exist_ok=True)
@@ -94,6 +96,10 @@ def main():
 
         if (i + 1) % 50 == 0:
             print(f"Exported {i + 1}/{len(matches)} matches...")
+
+    index = {"days": days, "maps": maps_list, "matches": matches}
+    (OUT_DIR / "index.json").write_text(json.dumps(index, indent=0), encoding="utf-8")
+    print(f"Wrote index.json: {len(days)} days, {len(maps_list)} maps, {len(matches)} matches")
 
     minimaps_src = data_root / "minimaps"
     for mid, fname in MINIMAP_NAMES.items():

@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
-import { fetchMaps, fetchMatches, fetchMatch, fetchHeatmap, minimapUrl, preloadMinimap, getDaysForMap } from './api';
+import { fetchMaps, fetchMatches, fetchMatch, fetchHeatmap, minimapUrl, preloadMinimap, getDaysForMap, prefetchMatch } from './api';
 import type { MatchData, HeatmapData } from './api';
 import { MapView } from './MapView';
-import { Filters } from './Filters';
+import { Filters, type MatchFilterKind } from './Filters';
 import { Timeline } from './Timeline';
 import { HeatmapControls, type HeatmapKind } from './HeatmapControls';
 import { Legend } from './Legend';
@@ -36,6 +36,7 @@ export default function App() {
   const [loadingMatch, setLoadingMatch] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [hintMapsForDay, setHintMapsForDay] = useState<string[]>([]);
+  const [matchFilter, setMatchFilter] = useState<MatchFilterKind>('default');
 
   useEffect(() => {
     Promise.all([fetchMaps()])
@@ -56,8 +57,9 @@ export default function App() {
     setError(null);
     setLoadingMatches(true);
     setHintMapsForDay([]);
+    setMatchFilter('default');
     preloadMinimap(selectedMapId);
-    fetchMatches(undefined, selectedMapId)
+    fetchMatches(undefined, selectedMapId, true)
       .then((r) => {
         setMatchesForMap(r.matches);
         const daysForMap = getDaysForMap(r.matches);
@@ -65,6 +67,10 @@ export default function App() {
         setSelectedDay(effectiveDay);
         setMatches(r.matches.filter((m) => m.day === effectiveDay));
         setSelectedMatchId('');
+        if (r.matches.length > 0) {
+          const first = r.matches[0];
+          prefetchMatch(first.match_id, first.map_id);
+        }
       })
       .catch((e) => setError(e instanceof Error ? e.message : 'Failed to load matches'))
       .finally(() => setLoadingMatches(false));
@@ -75,7 +81,18 @@ export default function App() {
     const filtered = matchesForMap.filter((m) => m.day === selectedDay);
     setMatches(filtered);
     setSelectedMatchId('');
+    if (filtered.length > 0) {
+      const first = filtered[0];
+      prefetchMatch(first.match_id, first.map_id);
+    }
   }, [selectedMapId, selectedDay, matchesForMap]);
+
+  useEffect(() => {
+    if (matchFilter === 'default' || matches.length === 0) return;
+    const key = matchFilter === 'maxKills' ? 'kills' : matchFilter === 'maxLoots' ? 'loots' : 'storm_deaths';
+    const sorted = [...matches].sort((a, b) => ((b as Record<string, number>)[key] ?? 0) - ((a as Record<string, number>)[key] ?? 0));
+    setSelectedMatchId(sorted[0].match_id);
+  }, [matchFilter, matches]);
 
   useEffect(() => {
     if (!selectedMatchId || !selectedMapId) {
@@ -188,6 +205,8 @@ export default function App() {
             onMatchChange={setSelectedMatchId}
             loadingMatches={loadingMatches}
             hintMapsForDay={hintMapsForDay}
+            matchFilter={matchFilter}
+            onMatchFilterChange={setMatchFilter}
           />
         </div>
       </div>
@@ -197,6 +216,12 @@ export default function App() {
           <div className="legend-column__inner">
             <span className="legend-column__title">Legend</span>
             <Legend />
+            {matchData && (
+              <div className="legend-column__summary">
+                <span className="legend-column__title">Summary</span>
+                <MatchSummary data={matchData} />
+              </div>
+            )}
           </div>
         </aside>
         <div className="app__map-area">
@@ -210,6 +235,14 @@ export default function App() {
               eventTypesShown={eventTypesShown}
             />
           </div>
+          {(loadingMatch && selectedMatchId) || (heatmapLoading && heatmapKind) ? (
+            <div className="map-loading-overlay" role="status" aria-live="polite" aria-busy="true">
+              <div className="map-loading-overlay__spinner" aria-hidden />
+              <span className="map-loading-overlay__text">
+                {loadingMatch && selectedMatchId ? 'Loading match…' : 'Loading overlay…'}
+              </span>
+            </div>
+          ) : null}
         </div>
         <aside className="app__sidebar">
           <div className="card">
@@ -221,11 +254,6 @@ export default function App() {
               heatmapLoading={heatmapLoading}
               availableOverlays={overlayAvailability}
             />
-            {matchData && (
-              <div className="match-summary">
-                <MatchSummary data={matchData} />
-              </div>
-            )}
           </div>
           <div className="card">
             <p className="card__title">Display options</p>

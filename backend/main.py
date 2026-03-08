@@ -62,8 +62,9 @@ def api_days():
 def api_matches(
     day: str | None = Query(None, description="Filter by day folder name"),
     map_id: str | None = Query(None, description="Filter by map"),
+    include_stats: bool = Query(False, description="Include kills, loots, storm_deaths per match"),
 ):
-    matches = list_matches(day=day, map_id=map_id)
+    matches = list_matches(day=day, map_id=map_id, include_stats=include_stats)
     return {"matches": matches}
 
 

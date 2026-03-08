@@ -61,9 +61,8 @@ export default function App() {
       .then((r) => {
         setMatchesForMap(r.matches);
         const daysForMap = getDaysForMap(r.matches);
-        const effectiveDay =
-          selectedDay && daysForMap.includes(selectedDay) ? selectedDay : (daysForMap[0] || '');
-        if (effectiveDay !== selectedDay) setSelectedDay(effectiveDay);
+        const effectiveDay = daysForMap[0] || '';
+        setSelectedDay(effectiveDay);
         setMatches(r.matches.filter((m) => m.day === effectiveDay));
         setSelectedMatchId('');
       })
